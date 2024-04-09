@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 1000px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1 class="text-center">COMMANDE</h1>
+    <br>
+    <div class="card w-75">
+    <div class="card-body">
+        <h5 class="card-title">Nouvelle Commande</h5>
+        <p class="card-text">Veuillez remplir tout les champs du formulaire </p>
+        {% include "commande/_form.html.twig" %}
+    </div>
+    </div>
+    <br>
+    <div class="card w-50">
+    <div class="card-body">
+        <h5 class="card-title">Suivis de Commande</h5>
+        <p class="card-text">Liste des commandes en cours </p>
+        <a href="#" class="btn btn-primary">Suivre ma commande</a>
+    </div>
+    </div>
+</div>
+
+{% endblock %}
