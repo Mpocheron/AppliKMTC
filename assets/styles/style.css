@@ -1,0 +1,362 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Montserrat, Helvetica, sans-serif;
+  background: #444142;
+  color: #d19c26;
+}
+
+/* __________BARRE DE NAVIGATION__________ */
+
+nav { /*navbar container*/
+  position: fixed;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 15px 25px;
+  background: black;
+  z-index: 1;
+}
+
+.nav-icon { /*logo*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.nav-icon span { /*c'est dans la boite*/
+  font-family: Roboto Flex, sans-serif;
+  font-size: 12px;
+  margin-top: 1px;
+  font-weight: 30;
+  color: #E3CC81;
+}
+
+.nav-icon img { /*image de ka boite*/
+  width: 100px;
+}
+
+.hamburger { /*l'hamburger n'est pas apparant par défaut*/
+  display: none;
+}
+
+.navlinks-container ::before{ /*le container des items du menu en ligne*/
+  margin-left: 30%;
+}
+
+.navlinks-container a { /*les items du menu*/
+  margin: 0 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #d19c26;
+  display: inline-block;
+  position: relative;
+}
+.navlinks-container a::after { /*le container des items du menu en colonne quand on appuie sur le hamburger*/
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  width: 100%;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: #d19c26;
+  transition: transform 0.3s ease-out;
+}
+.navlinks-container a:hover::after { /*fermeture du container*/
+  transform: scaleX(1);
+} 
+
+.nav-authentication { /*container boutons login/inscription*/
+  margin-left: auto;
+}
+
+.sign-btns button { /*bouton 1 connexion*/
+  font-family: Roboto Flex, sans-serif;
+  font-size: 16px;
+  color:#d19c26;
+  min-width: 90px;
+  padding: 10px 5px;
+  margin: 0 5px;
+  border-radius: 20px;
+  cursor: pointer;
+  border: none;
+  background: black;
+}
+.img_account { /*icone account*/
+  width: 14px;
+}
+
+.sign-btns button:nth-child(2) { /*bouton 2 inscription*/
+  border: none;
+  color: black;
+  background: #d19c26;
+}
+.user-toggler { /*icone account n'apparait pas par défaut*/
+  display: none;
+}
+
+/* __________PAGE RESPONSIVE__________ */
+
+@media (max-width: 900px) { /*format de page inférieur à 900px*/
+  nav {
+    padding: 15px 20px;
+    z-index: 1;
+    display: flex;
+    position: fixed;
+  }
+  
+  .nav-icon {
+    order: 2;
+    margin: 0 auto;
+  }
+
+  .nav-icon span {
+    font-size: 12px;
+  }
+  .main-navlinks {
+    order: 1;
+    width: auto;
+  }
+
+  /* hamburger */
+  .hamburger {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    background: black;
+    align-items: center;
+    position: relative;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #d19c26;
+    position: absolute;
+    pointer-events: none;
+    transition: opacity 0.3s 0.15s ease-out;
+  }
+  .hamburger span:nth-child(1), /*temps de transfo des barres du haut et du bas*/
+  .hamburger span:nth-child(3) {
+    transition: transform 0.3s ease-out;
+  }
+
+  .hamburger span:nth-child(1) {
+    transform: translateY(7px);
+  }
+  .hamburger span:nth-child(3) {
+    transform: translateY(-7px);
+  }
+
+  .hamburger.open span:nth-child(1) { /*la barre du haut fait une rotation de 135°*/
+    transform: translate(0) rotate(135deg);
+  }
+  .hamburger.open span:nth-child(2) { /*la barre du milieu disparait*/
+    opacity: 0;
+    transition: opacity 0s ease-out;
+  }
+  .hamburger.open span:nth-child(3) { /*la barre du bas fait une rotation de -135°*/
+    transform: translate(0) rotate(-135deg);
+  }
+
+  .navlinks-container { /*le container des items est fermé*/
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    background: black;
+    top: 100%;
+    left: 0;
+    transform: translate(-100%);
+    height: 100vh;
+    padding: 15px 50px 15px 20px;
+    border-right: 1px solid #c5c5c6;
+  }
+  .open { /*ouverture du container qd on clique sur le hamburger*/
+    transform: translate(0%);
+  }
+
+  .navlinks-container a {
+    font-size: 18px;
+    margin: 10px 0px;
+  }
+
+
+  .nav-authentication {
+    order: 3;
+    margin-left: 0;
+  }
+  .sign-btns { /*les boutons de log disparaissent*/
+    display: none;
+  }
+
+  .user-toggler { /*l'icone account remplace les boutons*/
+    display: block;
+    cursor: pointer;
+    border: none;
+  }
+
+  .user-toggler img {
+    width: 20px;
+  }
+}
+
+@media (max-width: 500px) { /*format de page inférieur à 500px*/
+  .nav-icon img {
+    width: 30px;
+  }
+  .nav-icon span {
+    font-size: 12px;
+  }
+}
+
+/* __________BODY__________ */
+
+.image-utilitaire { /*image arrière plan*/
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: auto;
+  z-index: -1;
+}
+
+.main-content {
+  background: #444142;
+}
+
+.accueil-texte-container {
+  z-index: 0;
+  position:relative;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  display: flex;
+
+}
+.accueil-texte {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+  text-align: center;
+  color: white;
+  font-size: 26px;
+  width: calc(100% - 20px);
+}
+
+.button-container { /*container des boutons envoyer et suivre*/
+  z-index: 0;
+  position: absolute;
+  top: 30%; /* À 30% du haut de l'élément parent */
+  left: 50%;
+  transform: translate(-50%, -25%);
+  display: flex;
+  justify-content: space-between; /* Espacement égal entre les boutons */
+  width: calc(100% - 25%); /* Largeur de 100% avec une marge de 25% à gauche et à droite */
+}
+
+.send-button, .track-button {
+  z-index: 0;
+  border: 2px solid black;
+  color: black;
+  background: linear-gradient(#d19c26,#E3CC81);
+  font-family: Montserrat, Helvetica, sans-serif;
+  font-size: 26px;
+  min-width: 150px;
+  padding: 30px 20px; /* Taille des boutons */
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) { /*bouton plus petit sur page inferieure à 900px*/
+  .button-container .send-button,
+  .button-container .track-button {
+    font-size: 20px;
+    padding: 20px 15px;
+  }
+}
+.element-home-page {
+  margin-bottom: 1px;
+}
+
+.body-home {
+ margin-top: -110px;
+  z-index: 0;
+}
+
+.apropos { /*photo et textes alignés*/
+  display: grid;
+
+}
+
+.text-apropos {
+  margin: 0;
+}
+
+.titres-menu { /*style des titres des items*/
+  color: black;
+  font-size: 36px;
+  padding: 0 10px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px #d19c26;
+
+}
+
+.container-contact { 
+  width: 100%;
+  display: grid;
+  background: #444142;
+
+}
+
+.container-contact .table { /*tableau de contact*/
+  margin:auto;
+  grid-column-gap: 25%;
+  grid-template-columns: repeat(3, 1fr);
+  width: 80%;
+  border-collapse: separate;
+  border: 1px solid black; 
+  background: linear-gradient(#d19c26,#E3CC81);
+}
+
+.container-contact .td { /*cellules du tableau contact*/
+  width: 25%;
+  padding: 10px;
+  border: 1px solid black; 
+  background: linear-gradient(#d19c26,#E3CC81); 
+}
+
+@media (max-width: 900px) { /*ajustement page plus petite*/
+  .image-kabba {
+    width: 150px;
+    height:auto;
+  }
+
+  .accueil-texte {
+  font-size: 16px;
+  }
+}
+
+/* __________FOOTER__________ */
+
+.footer-bar { 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding:25px 25px;
+  background: black;
+  bottom: 0;
+}
