@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Suivi de colis{% endblock %}
+
+{% block body %}
+    <h1>Suivi de commande</h1>
+
+    <form method="POST">
+        {{ form_start(suiviform) }}
+        
+        {{ form_row(suiviform.orderNumber) }}
+        
+        <button type="submit">Suivre</button>
+        
+        {{ form_end(suiviform) }}
+    </form>
+    
+    {% if order is defined %}
+        <h2>Informations sur la commande</h2>
+        <p>Numéro de commande : {{ order.orderNumber }}</p>
+        <p>Statut : {{ order.status }}</p>
+        <p>Adresse de livraison : {{ order.deliveryAddress }}</p>
+    {% endif %}
+{% endblock %}
