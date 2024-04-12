@@ -3,14 +3,16 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Validator\ContainsLetters;
+use App\Validator\ContainsNumbers;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -20,14 +22,28 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('nom')
-            ->add('prenom')
+            ->add('nom', TextType::class, [
+                'constraints' => [
+                    new ContainsLetters(
+                        null,
+                        'Seuls les caractères alphabétiques sont autorisés'
+                    )
+                ]
+            ])
+            ->add('prenom', TextType::class, [
+                'constraints' => [
+                    new ContainsLetters(
+                        null,
+                        'Seuls les caractères alphabétiques sont autorisés'
+                    )
+                ]
+            ])
             ->add('telephone', TelType::class, [
                 'constraints' => [
-                    new Regex([
-                        'pattern' => '/[0-9]/',
-                        'message' => 'Veuillez entrer un numero de téléphone valide'
-                    ]),
+                    new ContainsNumbers(
+                        null,
+                        'Veuillez entrer un numero de téléphone valide'
+                    ),
                     new Length([
                         'min' => 10,
                         'max' => 10,
