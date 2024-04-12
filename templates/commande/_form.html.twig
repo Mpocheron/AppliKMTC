@@ -1,38 +1,42 @@
 
 <div class="form">
+    <div class="card col-12">
+        <div class="card-body">
+            <h5> Informations Destinataire</h5>
+            <br>
+            <br>
+            <br>
+            </div>
+        </div>
     <div class="card col-6">
-    <div class="card-body">
-        <h5> Les dimensions du colis </h5>
-        {{ form_start(commandeform) }}
-        {{ form_row(commandeform.hauteur) }}
-        {{ form_row(commandeform.largeur) }}
-        {{ form_row(commandeform.longueur) }}
-        {{ form_row(commandeform.poids) }}
-    </div>
+        <div class="card-body">
+            <h5> Les dimensions du colis </h5>
+            {{ form_start(commandeform) }}
+            {{ form_row(commandeform.hauteur) }}
+            {{ form_row(commandeform.largeur) }}
+            {{ form_row(commandeform.longueur) }}
+            {{ form_row(commandeform.poids) }}
+        </div>
     </div>
     <br>
     <div class="card col-12">
-    <div class="card-body">
+        <div class="card-body">
         <h5> Informations Expediteur</h5>
         {{ form_row(commandeform.leUser) }}
+        
         <br>
-        {{ form_row(commandeform.adresseExpedition) }}
+        
         <br>
+        <h5> Adresse Facturation</h5>
         {{ form_row(commandeform.adresseFacturation) }}
         </div>
     </div>
     <br>
-        <div class="card col-12">
-    <div class="card-body">
-        <h5> Informations Destinataire</h5>
-
-        {{ form_row(commandeform.adresseDestination) }}
-        <br>
-        {{ form_row(commandeform.leCasier) }}
-        </div>
-    </div>
+        
+    <br>
+    {{ form_widget(commandeform.COMMANDER, {'attr': {'class': 'btn btn-primary', 'name': 'valider'}}) }}
+    <br>
     {{ form_end(commandeform) }}
     <br>
-    <button type="submit" class="btn btn-primary">Commander</button>
 </div>
 
