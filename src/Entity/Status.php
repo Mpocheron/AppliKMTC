@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StatusRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,8 +22,16 @@ class Status
     #[ORM\ManyToOne]
     private ?Etat $leEtat = null;
 
-    #[ORM\ManyToOne(inversedBy: 'lesStatus')]
-    private ?commande $laCommande = null;
+    /**
+     * @var Collection<int, Commande>
+     */
+    #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'Status')]
+    private Collection $commandes;
+
+    public function __construct()
+    {
+        $this->commandes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -52,14 +62,39 @@ class Status
         return $this;
     }
 
-    public function getLaCommande(): ?commande
-    {
-        return $this->laCommande;
-    }
-
     public function setLaCommande(?commande $laCommande): static
     {
         $this->laCommande = $laCommande;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): static
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->setStatus($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): static
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getStatus() === $this) {
+                $commande->setStatus(null);
+            }
+        }
 
         return $this;
     }

@@ -27,9 +27,6 @@ class Commande
     #[ORM\Column]
     private ?int $poids = null;
 
-    #[ORM\OneToMany(mappedBy: 'laCommande', targetEntity: Status::class)]
-    private Collection $lesStatus;
-
     #[ORM\ManyToOne(inversedBy: 'lesCommandes')]
     private ?User $leUser = null;
 
@@ -44,6 +41,9 @@ class Commande
 
     #[ORM\OneToOne(inversedBy: 'laCommande', cascade: ['persist', 'remove'])]
     private ?Casier $leCasier = null;
+
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    private ?Status $Status = null;
 
     public function __construct()
     {
@@ -99,36 +99,6 @@ class Commande
     public function setPoids(int $poids): static
     {
         $this->poids = $poids;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Status>
-     */
-    public function getLesStatus(): Collection
-    {
-        return $this->lesStatus;
-    }
-
-    public function addLesStatus(Status $lesStatus): static
-    {
-        if (!$this->lesStatus->contains($lesStatus)) {
-            $this->lesStatus->add($lesStatus);
-            $lesStatus->setLaCommande($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLesStatus(Status $lesStatus): static
-    {
-        if ($this->lesStatus->removeElement($lesStatus)) {
-            // set the owning side to null (unless already changed)
-            if ($lesStatus->getLaCommande() === $this) {
-                $lesStatus->setLaCommande(null);
-            }
-        }
 
         return $this;
     }
@@ -189,6 +159,18 @@ class Commande
     public function setLeCasier(?Casier $leCasier): static
     {
         $this->leCasier = $leCasier;
+
+        return $this;
+    }
+
+    public function getStatus(): ?Status
+    {
+        return $this->Status;
+    }
+
+    public function setStatus(?Status $Status): static
+    {
+        $this->Status = $Status;
 
         return $this;
     }

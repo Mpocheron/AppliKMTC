@@ -42,15 +42,12 @@ class CommandeController extends AbstractController
         ]);
     }
 
-    #[Route('/suivi', name: 'app_suivi_commande')]
+    #[Route('user/suivi/{id}', name: 'app_suivi_commande')]
 
-    public function suivi_commande(): Response
+    public function suivi_commande(Commande $commande): Response
     {
-        //Creation du formulaire de suivi
-        $suiviform = $this->createForm(SuiviCommandeType::class);
 
         return $this->render('commande/suivi.html.twig', [
-            'suiviform' => $suiviform->createView(),
-        ]);
+            'commande' => $commande]);
     }
 }
