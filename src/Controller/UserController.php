@@ -35,12 +35,12 @@ class UserController extends AbstractController
     
     public function editUser(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
     {
-        //Si l'utilisateur n'est pas connecté, il est redirigé vers la page de connexion
+        $user = $this->getUser();
 
+        //Si l'utilisateur n'est pas connecté, il est redirigé vers la page de connexion
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
-
 
         $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
