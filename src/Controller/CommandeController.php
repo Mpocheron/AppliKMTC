@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CommandeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,8 +45,10 @@ class CommandeController extends AbstractController
 
     #[Route('user/suivi/{id}', name: 'app_suivi_commande')]
 
-    public function suivi_commande(Commande $commande): Response
+    public function suivi_commande(CommandeRepository $commandeRepository, int $id): Response
     {
+
+        $commande = $commandeRepository->find($id);
 
         return $this->render('commande/suivi.html.twig', [
             'commande' => $commande]);

@@ -68,6 +68,4 @@ class UserController extends AbstractController
             'editUserForm' => $form->createView(),
         ]);
     }
-
-
 }
