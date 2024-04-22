@@ -4,32 +4,87 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 1000px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper { margin: 5em auto; max-width: 1000px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
 <div class="example-wrapper">
     <h1 class="text-center">COMMANDE</h1>
-    <div class="card-body">
-       
-    </div>
-
-    
     <br>
     <div class="card w-75">
-    <div class="card-body">
-        <h5 class="card-title">Nouvelle Commande</h5>
-        <p class="card-text">Veuillez remplir tout les champs du formulaire </p>
-        {% include "commande/_form.html.twig" %}
-    </div>
+        <div class="card-body">
+            <h5 class="card-title">Nouvelle Commande</h5>
+            <p class="card-text">Veuillez remplir les dimensions de votre colis </p>
+            {# FORMULAIRE COMMANDE #}
+            <div class="form">
+                <div class="card col-12">
+                    <div class="card-body">
+                        <h5> Informations Expediteur</h5>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+                <br>
+                <div class="card col-6 m-6">
+                    
+                    <div class="form-group">
+                        
+                        {{ form_row(commandeform.leUser) }}
+                    </div>
+                    <div class="card-body">
+                
+                
+                        {# Ajout du champ pour le nombre de colis
+                        <div class="card-body">
+                            {{ form_label(commandeform.nombreColis, 'Nombre de colis') }}
+                            {{ form_widget(commandeform.nombreColis, {'attr': {'class': 'form-control'}}) }}
+
+                            {% for i in 1..commandeform.nombreColis.vars.value %}
+                                <h5>Dimensions du colis {{ i }}</h5>
+                                {{ form_row(commandeform['colis_' ~ i].hauteur) }}
+                                {{ form_row(commandeform['colis_' ~ i].largeur) }}
+                                {{ form_row(commandeform['colis_' ~ i].longueur) }}
+                                {{ form_row(commandeform['colis_' ~ i].poids) }}
+                            {% endfor %}
+                        </div> #}
+
+                        <h5> Les dimensions du colis </h5>
+                        {{ form_start(commandeform) }}
+                        {{ form_row(commandeform.hauteur) }}
+                        {{ form_row(commandeform.largeur) }}
+                        {{ form_row(commandeform.longueur) }}
+                        {{ form_row(commandeform.poids) }}
+                    </div>
+                </div>
+                <br>
+                <div class="card col-12">
+                    <div class="card-body">
+                    
+                    <h5> Informations Destinataire</h5>
+                    <br>
+                    
+                    <br>
+                    <h5> Adresse Facturation</h5>
+                    {{ form_row(commandeform.adresseFacturation) }}
+                    </div>
+                </div>
+                <br>
+                <br>
+                {{ form_widget(commandeform.COMMANDER, {'attr': {'class': 'btn btn-primary', 'name': 'valider'}}) }}
+                <br>
+                {{ form_end(commandeform) }}
+                <br>
+            </div>
+        </div>
     </div>
     <br>
     <div class="card w-50">
-    <div class="card-body">
-        <h5 class="card-title">Suivis de Commande</h5>
-        <p class="card-text">Liste des commandes en cours </p>
-        <a href="#" class="btn btn-primary">Suivre ma commande</a>
-    </div>
+        <div class="card-body">
+            <h5 class="card-title">Suivis de Commande</h5>
+            <p class="card-text">Liste des commandes en cours </p>
+            <a href="#" class="btn btn-primary">Suivre ma commande</a>
+        </div>
     </div>
 </div>
 
