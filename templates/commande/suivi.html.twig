@@ -5,5 +5,13 @@
 {% block body %}
     <h1>Suivi de commande</h1>
     <p>Voici le suivi de votre commande :</p>
-    
+
+{% if commande.getStatus() == 1 %}
+    <p>En attente de validation</p>
+{% elseif commande.getStatus() == 2 %}
+    <p>En cours de préparation</p>
+{% elseif commande.getStatus() == 3 %}
+    <p>Expédiée</p>
+{% elseif commande.getStatus() == 4 %}
+    <p>Livrée en point relais</p>
 {% endblock %}
