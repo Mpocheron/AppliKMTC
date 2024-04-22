@@ -34,7 +34,14 @@ class CommandeFormType extends AbstractType
                 'by_reference' => false, // Nécessaire pour que les éléments ajoutés soient correctement associés à l'entité parente
             ])*/
  
-       
+       ->add('adresseFacturation', EntityType::class, [
+                'class' => Adresse::class,
+                'choice_label' => function ($adresse) {
+                    // Construire l'étiquette de choix personnalisée avec plusieurs colonnes
+                    return $adresse->getNumero() . ' ' . $adresse->getNom() . ', ' . $adresse->getCodePostal() . ' ' . $adresse->getVille();
+                },
+                'label' => 'Adresse de facturation'
+            ])
         // je n'ai pas intégré les adresses expedition (car récupéré avec user en vue) et destination (car relais colis)
             ->add('hauteur', options:[ 'label'=>'Hauteur (en cm)',
                                         'required' => true
@@ -59,14 +66,7 @@ class CommandeFormType extends AbstractType
             // ici mettre le relais
             //->add('nom', EntityType::class, ['mapped' => false ])
             
-            ->add('adresseFacturation', EntityType::class, [
-                'class' => Adresse::class,
-                'choice_label' => function ($adresse) {
-                    // Construire l'étiquette de choix personnalisée avec plusieurs colonnes
-                    return $adresse->getNumero() . ' ' . $adresse->getNom() . ', ' . $adresse->getCodePostal() . ' ' . $adresse->getVille();
-                },
-                'label' => 'Adresse de facturation'
-            ])
+            
 
             ->add('COMMANDER', SubmitType::class,['label'=>'ENVOYER'])
         ;
