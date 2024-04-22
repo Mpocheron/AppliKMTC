@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Modification des informations de l'utilisateur {% endblock %}
+
+{% block body %}
+
+	{% form_theme editUserForm 'bootstrap_4_layout.html.twig' %}
+
+	{{ form_start(editUserForm, {'attr': {'class': 'form-horizontal'}}) }}
+
+		{{ form_row(editUserForm.nom) }}
+
+		{{ form_row(editUserForm.prenom) }}
+
+		{{ form_row(editUserForm.telephone) }}
+
+		{{ form_row(editUserForm.password) }}
+
+		<button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+
+	{{ form_end(editUserForm) }}
+
+
+{% endblock %}

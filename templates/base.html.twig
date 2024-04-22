@@ -1,19 +1,73 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Flex:opsz,wght@8..144,100;8..144,300;8..144,500;8..144,700;8..144,900&display=swap" rel="stylesheet">
+    {% block stylesheets %}
+      {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+    {% block javascripts %}
+      {{ encore_entry_script_tags('app') }}
         {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+
+
+</head>
+<body>
+    <nav>
+        <a href="#accueil" class="nav-icon" aria-label="homepage" aria-current="page">
+        <img class="img" src="img/logo-2.png"/>
+            <span>C'est dans la boîte</span>
+        </a>
+
+        <div class="main-navlinks">
+            <button type="button" class="hamburger"  aria-label="Toggle Navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="navlinks-container">
+                <a href="#accueil" aria-current="page">Accueil</a>
+                <a href="#apropos">A propos de nous</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+
+            </div>
+        </div>
+
+        <div class="nav-authentication">
+            <a href="#" class="user-toggler" aria-label="Sign in page">
+            <img src="img/account.png" class="user-toggler img" alt="user-icon">
+            </a>
+            <div class="sign-btns">
+    <button type="button">
+        Connexion
+    </button>
+    <button type="button">Inscription</button>
+</div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        {% block content %}
+         </br></br></br></br></br></br></br></br>
+        {% endblock %}
+    </main>
+
+    <footer class="footer-bar">
+        <div>
+            <div>Copyright © 2023 KMTC</div>
+            <p>
+                <span>All Rights Reserved | </span>
+                <a href="terms_and_conditions.html">Terms and Conditions</a>
+                <span> | </span>
+                <a href="privacy_policy.html">Privacy Policy</a>
+            </p>
+        </div>
+    </footer>
+
+</body>
 </html>
