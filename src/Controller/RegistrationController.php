@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Repository\UserRepository;
 
 class RegistrationController extends AbstractController
 {
@@ -40,6 +41,27 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
+        ]);
+    }
+    
+
+
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+    /**
+     * @Route("/dernier-inscrit", name="dernier_inscrit")
+     */
+    public function dernierInscrit(): Response
+    {
+        $dernierInscrit = $this->userRepository->findLastRegistered();
+
+        return $this->render('dernier_inscrit.html.twig', [
+            'dernierInscrit' => $dernierInscrit,
         ]);
     }
 }

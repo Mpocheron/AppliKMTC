@@ -1,22 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer un compte{% endblock %}
+{# {% block title %}Créer un compte{% endblock %} #}
 
-{% block body %}
-    <h1>Créer un compte</h1>
-
+{% block content %}
+<div class="container-register">
+<table><tr>
+    
+    
+    
+    <td class="formulaire-register">
+    <br><br><br><br><br>
+    <div class="titre-register">Créez votre compte</div>
+    
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.nom) }}
-        {{ form_row(registrationForm.prenom) }}
-        {{ form_row(registrationForm.telephone) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+    
+        <p><label class="legende-register" for="registrationForm_email">Email</label></p>
+        <p>{{ form_widget(registrationForm.email, {'attr': {'class': 'champs-register', 'id': 'registrationForm_email'}}) }}</p>
 
-        <button type="submit" class="btn">Créer</button>
+        <p><label class="legende-register" for="registrationForm_plainPassword">Mot de Passe</label></p>
+        <p>{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'champs-register', 'id': 'registrationForm_plainPassword'}}) }}</p>
+
+        <p><label class="legende-register" for="registrationForm_nom">Nom</label></p>
+        <p>{{ form_widget(registrationForm.nom, {'attr': {'class': 'champs-register', 'id': 'registrationForm_nom'}}) }}</p>
+
+        <p><label class="legende-register" for="registrationForm_prenom">Prénom</label></p>
+        <p>{{ form_widget(registrationForm.prenom, {'attr': {'class': 'champs-register', 'id': 'registrationForm_prenom'}}) }}</p>
+
+        <p><label class="legende-register" for="registrationForm_telephone">Téléphone</label></p>
+        <p>{{ form_widget(registrationForm.telephone, {'attr': {'class': 'champs-register', 'id': 'registrationForm_telephone'}}) }}</p>
+
+        <p><label class="legende-register" for="registrationForm_agreeTerms">J'accepte les termes et conditions</label></p>
+        <p>{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input', 'id': 'registrationForm_agreeTerms'}}) }}</p>
+    </div>
+    <button class="btn-creer" type="submit">Créer</button>
     {{ form_end(registrationForm) }}
+</td>
+    <td> <img src="img/cubes2.png" class="image-cubes"/></td></tr></table>
+    </div>
 {% endblock %}

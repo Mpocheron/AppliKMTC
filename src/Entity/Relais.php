@@ -87,4 +87,24 @@ class Relais
 
         return $this;
     }
+    public function denombrerCasier(): int
+    {
+        // Initialise le nombre de casiers à zéro
+        $nombreCasiers = 0;
+        
+        // Initialise l'adresse du relais
+        $adresse = '';
+        
+        // Parcours tous les casiers associés à ce relais
+        foreach ($this->lesCasiers as $casier) {
+                // Incrémente le nombre de casiers
+                $nombreCasiers++;
+        }
+
+               
+            // Retourne les informations sous forme de tableau associatif
+            return $nombreCasiers;
+        }
+    
+
 }

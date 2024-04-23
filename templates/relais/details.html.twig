@@ -1,0 +1,19 @@
+{# templates/relais/details.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Relais{% endblock %}
+
+{% block content %}
+<br><br><br><br><br><br><br>
+    <h1>Détails du Relais</h1>
+    <dl>
+        <dt>Nom du Relais:</dt>
+<dd>{{ relais.nom }}</dd>
+<dt>Adresse:</dt>
+<dd>{{ relais.leAdresse.nom }}</dd>
+<dt>Nombre de Casiers:</dt>
+<dd class="{{ relais.denombrerCasier() > 2 ? 'sup55' : 'inf55' }}">{{ relais.denombrerCasier() }}</dd>
+
+    </dl>
+{% endblock %}
