@@ -18,7 +18,7 @@
 </head>
 <body>
     <nav>
-        <a href="#accueil" class="nav-icon" aria-label="homepage" aria-current="page">
+        <a href="home#accueil" class="nav-icon" aria-label="homepage" aria-current="page">
         <img class="img" src="img/logo-2.png"/>
             <span>C'est dans la boîte</span>
         </a>
@@ -30,30 +30,27 @@
                 <span></span>
             </button>
             <div class="navlinks-container">
-                <a href="#accueil" aria-current="page">Accueil</a>
-                <a href="#apropos">A propos de nous</a>
-                <a href="#services">Services</a>
-                <a href="#contact">Contact</a>
+                <a href="home#accueil" aria-current="page">Accueil</a>
+                <a href="home#apropos">A propos de nous</a>
+                <a href="home#services">Services</a>
+                <a href="home#contact">Contact</a>
 
             </div>
         </div>
 
         <div class="nav-authentication">
-            <a href="#" class="user-toggler" aria-label="Sign in page">
+            <a href="login" class="user-toggler" aria-label="Sign in page">
             <img src="img/account.png" class="user-toggler img" alt="user-icon">
             </a>
             <div class="sign-btns">
-    <button type="button">
-        Connexion
-    </button>
-    <button type="button">Inscription</button>
+    <button type="button" onclick="window.location.href='login'">Connexion</button>
+    <button type="button" onclick="window.location.href='register'">Inscription</button>
 </div>
-        </div>
     </nav>
 
     <main class="main-content">
         {% block content %}
-         </br></br></br></br></br></br></br></br>
+         {# </br></br></br></br></br></br></br></br> #}
         {% endblock %}
     </main>
 
