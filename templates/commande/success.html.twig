@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block content %}
+
+    <h1>Résultat de la commande</h1>
+
+    {# Afficher le message directement transmis #}
+    {% if message %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endif %}
+{% endblock %}

@@ -46,7 +46,13 @@ class Commande
     private ?Casier $leCasier = null;
 
     #[ORM\Column]
-    private ?int $NombreColis = null;
+    private ?int $NombreColis = 1;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nomDestinataire = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $prenomDestinataire = null;
 
     public function __construct()
     {
@@ -204,6 +210,30 @@ class Commande
     public function setNombreColis(int $NombreColis): static
     {
         $this->NombreColis = $NombreColis;
+
+        return $this;
+    }
+
+    public function getNomDestinataire(): ?string
+    {
+        return $this->nomDestinataire;
+    }
+
+    public function setNomDestinataire(?string $nomDestinataire): static
+    {
+        $this->nomDestinataire = $nomDestinataire;
+
+        return $this;
+    }
+
+    public function getPrenomDestinataire(): ?string
+    {
+        return $this->prenomDestinataire;
+    }
+
+    public function setPrenomDestinataire(?string $prenomDestinataire): static
+    {
+        $this->prenomDestinataire = $prenomDestinataire;
 
         return $this;
     }

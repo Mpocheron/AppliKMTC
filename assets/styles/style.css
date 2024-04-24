@@ -15,7 +15,8 @@ body {
 /* __________BARRE DE NAVIGATION__________ */
 
 nav { /*navbar container*/
-  position: fixed;
+  top: 0;
+  position: sticky;
   width: 100%;
   display: flex;
   align-items: center;
@@ -349,6 +350,10 @@ nav { /*navbar container*/
   font-size: 16px;
   }
 }
+
+/* _______ COMMANDE ____________*/
+    .formulaire-commande { margin: 5em auto; max-width: 1000px; width: 95%;  } 
+    .formulaire-commande code { padding: 2px 6px; }
 
 /* __________FOOTER__________ */
 
