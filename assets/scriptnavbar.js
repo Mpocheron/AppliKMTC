@@ -15,6 +15,14 @@ const toggleNav = e => {
 
 toggler.addEventListener("click", toggleNav);
 
+const navLinks = document.querySelectorAll(".navlinks-container a");
+navLinks.forEach(link => {
+  link.addEventListener("click", function() {
+    navLinksContainer.classList.remove("open");
+    toggler.classList.remove("open");
+    toggler.setAttribute("aria-expanded", "false");
+  });
+});
 
 new ResizeObserver(entries => {
   if (entries[0].contentRect.width <= 900){

@@ -20,7 +20,7 @@ nav { /*navbar container*/
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 15px 25px;
+  padding: 1.5vw 1.5vw;
   background: black;
   z-index: 1;
 }
@@ -30,101 +30,108 @@ nav { /*navbar container*/
   flex-direction: column;
   align-items: center;
   text-decoration: none;
-  margin-right: 10px;
-  margin-left: 10px;
+  margin: 0 3vw;
 }
 
-.nav-icon span { /*c'est dans la boite*/
+.nav-icon span {/*c'est dans la boite*/
   font-family: Roboto Flex, sans-serif;
-  font-size: 12px;
-  margin-top: 1px;
+  align-items: center;
+  font-size: 1.5vw;
+  /* margin-top: 0.1vw; */
   font-weight: 30;
   color: #E3CC81;
 }
 
-.nav-icon img { /*image de ka boite*/
-  width: 100px;
+.nav-icon img {/*image de la boite*/
+  width: 8vw;
 }
 
-.hamburger { /*l'hamburger n'est pas apparant par défaut*/
+.hamburger {/*l'hamburger n'est pas apparant par défaut*/
   display: none;
 }
 
-.navlinks-container ::before{ /*le container des items du menu en ligne*/
-  margin-left: 30%;
+.navlinks-container::before {/*le container des items du menu en ligne*/
+  margin-left: 3.5vw;
 }
 
-.navlinks-container a { /*les items du menu*/
-  margin: 0 10px;
-  font-size: 16px;
+.navlinks-container a {/*les items du menu*/
+  margin: 0 1.75vw;
+  font-size: 1.8vw;
   font-weight: 500;
   color: #d19c26;
   display: inline-block;
   position: relative;
 }
-.navlinks-container a::after { /*le container des items du menu en colonne quand on appuie sur le hamburger*/
+
+.navlinks-container a::after {/*le container des items du menu en colonne quand on appuie sur le hamburger*/
   content: "";
   display: block;
   position: absolute;
-  bottom: -3px;
+  bottom: -0.15vw;
   width: 100%;
-  height: 1px;
+  height: 0.1vw;
   transform: scaleX(0);
   transform-origin: left;
   background: #d19c26;
   transition: transform 0.3s ease-out;
 }
-.navlinks-container a:hover::after { /*fermeture du container*/
-  transform: scaleX(1);
-} 
 
-.nav-authentication { /*container boutons login/inscription*/
+.navlinks-container a:hover::after {/*fermeture du container*/
+  transform: scaleX(1);
+}
+
+.nav-authentication {/*container boutons login/inscription*/
   margin-left: auto;
 }
 
-.sign-btns button { /*bouton 1 connexion*/
+.sign-btns button {/*bouton 1 connexion*/
   font-family: Roboto Flex, sans-serif;
-  font-size: 16px;
-  color:#d19c26;
-  min-width: 90px;
-  padding: 10px 5px;
-  margin: 0 5px;
-  border-radius: 20px;
+  font-size: 1.8vw;
+  color: #d19c26;
+  min-width: 4.5vw;
+  padding: 1vw 0.5vw;
+  margin: 0 0.5vw;
+  border-radius: 4vw;
   cursor: pointer;
   border: none;
   background: black;
 }
-.img_account { /*icone account*/
-  width: 14px;
+
+.img_account {/*icone account*/
+  width: 2.8vw;
 }
 
-.sign-btns button:nth-child(2) { /*bouton 2 inscription*/
+.sign-btns button:nth-child(2) {/*bouton 2 inscription*/
   border: none;
   color: black;
   background: #d19c26;
 }
-.user-toggler { /*icone account n'apparait pas par défaut*/
+
+.user-toggler {/*icone account n'apparait pas par défaut*/
   display: none;
 }
 
 /* __________PAGE RESPONSIVE__________ */
 
 @media (max-width: 900px) { /*format de page inférieur à 900px*/
+
   nav {
-    padding: 15px 20px;
+    padding: 2.5vw 4vw;
     z-index: 1;
     display: flex;
     position: fixed;
   }
-  
-  .nav-icon {
+
+  .nav-icon { /*les ordres changent, burger logo account*/
     order: 2;
     margin: 0 auto;
   }
 
-  .nav-icon span {
-    font-size: 12px;
+  .nav-authentication {
+    order: 3;
+    margin-left: 0;
   }
+
   .main-navlinks {
     order: 1;
     width: auto;
@@ -132,8 +139,8 @@ nav { /*navbar container*/
 
   /* hamburger */
   .hamburger {
-    width: 20px;
-    height: 20px;
+    width: 2.8vw;
+    height: 2.8vw;
     cursor: pointer;
     border: none;
     display: flex;
@@ -157,10 +164,10 @@ nav { /*navbar container*/
   }
 
   .hamburger span:nth-child(1) {
-    transform: translateY(7px);
+    transform: translateY(0.9vw);
   }
   .hamburger span:nth-child(3) {
-    transform: translateY(-7px);
+    transform: translateY(-0.9vw);
   }
 
   .hamburger.open span:nth-child(1) { /*la barre du haut fait une rotation de 135°*/
@@ -174,7 +181,7 @@ nav { /*navbar container*/
     transform: translate(0) rotate(-135deg);
   }
 
-  .navlinks-container { /*le container des items est fermé*/
+  .navlinks-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -182,25 +189,25 @@ nav { /*navbar container*/
     background: black;
     top: 100%;
     left: 0;
-    transform: translate(-100%);
+    transform: translate(-100%); /*le container est fermé*/
     height: 100vh;
-    padding: 15px 50px 15px 20px;
-    border-right: 1px solid #c5c5c6;
+    padding: 2.5vw 6vw 2.5vw 4vw;
+    border-right: 0.2vw solid #c5c5c6;
   }
-  .open { /*ouverture du container qd on clique sur le hamburger*/
+
+  .open {/*ouverture du container qd on clique sur le hamburger*/
     transform: translate(0%);
   }
 
   .navlinks-container a {
-    font-size: 18px;
-    margin: 10px 0px;
+    font-size: 2.2vw;
+    margin: 1.5vw 0vw;
   }
-
 
   .nav-authentication {
-    order: 3;
     margin-left: 0;
   }
+
   .sign-btns { /*les boutons de log disparaissent*/
     display: none;
   }
@@ -212,22 +219,13 @@ nav { /*navbar container*/
   }
 
   .user-toggler img {
-    width: 20px;
-  }
-}
-
-@media (max-width: 500px) { /*format de page inférieur à 500px*/
-  .nav-icon img {
-    width: 30px;
-  }
-  .nav-icon span {
-    font-size: 12px;
+    width: 3vw;
   }
 }
 
 /* __________BODY__________ */
 
-.image-utilitaire { /*image arrière plan*/
+.image-utilitaire {/*image arrière plan*/
   margin: 0;
   padding: 0;
   width: 100%;
@@ -241,12 +239,12 @@ nav { /*navbar container*/
 
 .accueil-texte-container {
   z-index: 0;
-  position:relative;
+  position: relative;
   left: 50%;
   transform: translate(-50%, -100%);
   display: flex;
-
 }
+
 .accueil-texte {
   position: relative;
   left: 50%;
@@ -254,14 +252,14 @@ nav { /*navbar container*/
   z-index: 0;
   text-align: center;
   color: white;
-  font-size: 26px;
-  width: calc(100% - 20px);
+  font-size: 2.5vw;
+  width: calc(100% - 1.5vw);
 }
 
 .button-container { /*container des boutons envoyer et suivre*/
   z-index: 0;
   position: absolute;
-  top: 30%; /* À 30% du haut de l'élément parent */
+  top: 30%; /* À 30% du haut de l'élément parent pour éviter navbar*/
   left: 50%;
   transform: translate(-50%, -25%);
   display: flex;
@@ -269,86 +267,73 @@ nav { /*navbar container*/
   width: calc(100% - 25%); /* Largeur de 100% avec une marge de 25% à gauche et à droite */
 }
 
-.send-button, .track-button {
+.send-button,
+.track-button { /*boutons envoyer et suivre*/
   z-index: 0;
-  border: 2px solid black;
+  border: 0.2vw solid black;
   color: black;
-  background: linear-gradient(#d19c26,#E3CC81);
+  background: linear-gradient(#d19c26, #E3CC81);
   font-family: Montserrat, Helvetica, sans-serif;
-  font-size: 26px;
-  min-width: 150px;
-  padding: 30px 20px; /* Taille des boutons */
-  border-radius: 20px;
+  font-size: 2vw;
+  padding: 0.8vw 1.2vw;
+  border-radius: 4vw;
   cursor: pointer;
 }
 
-@media (max-width: 900px) { /*bouton plus petit sur page inferieure à 900px*/
-  .button-container .send-button,
-  .button-container .track-button {
-    font-size: 20px;
-    padding: 20px 15px;
-  }
-}
-.element-home-page {
-  margin-bottom: 1px;
-}
-
-.body-home {
- margin-top: -110px;
+.propos-container { /*container à propos de nous*/
+  margin: 0 2vw;
   z-index: 0;
+  display: grid;
 }
 
-.apropos { /*photo et textes alignés*/
+.apropos {
   display: grid;
+  align-items: center;
+  position: relative;
+}
 
+.apropos table td {
+  vertical-align: bottom; /* Aligne le contenu en bas de la cellule */
+}
+
+.image-kabba {
+  height: auto;
+  width: 25vw;
 }
 
 .text-apropos {
-  margin: 0;
+  margin-left: 2vw; /* Ajoute un espace entre l'image et le texte */
 }
 
 .titres-menu { /*style des titres des items*/
   color: black;
-  font-size: 36px;
-  padding: 0 10px;
+  font-size: 4vw;
+  padding: 0 2vw;
   font-weight: bold;
-  text-shadow: 2px 2px 4px #d19c26;
-
+  text-shadow: 0.2vw 0.2vw 0.4vw #d19c26;
 }
 
-.container-contact { 
+.container-contact { /*container contact*/
   width: 100%;
   display: grid;
   background: #444142;
-
 }
 
-.container-contact .table { /*tableau de contact*/
-  margin:auto;
-  grid-column-gap: 25%;
+.container-contact .table { /*tableau contact*/
+  margin: auto;
+  grid-column-gap: 12.5vw;
   grid-template-columns: repeat(3, 1fr);
-  width: 80%;
+  width: 90%;
   border-collapse: separate;
-  border: 1px solid black; 
-  background: linear-gradient(#d19c26,#E3CC81);
+  border: 0.2vw solid black;
+  background: linear-gradient(#d19c26, #E3CC81);
 }
 
-.container-contact .td { /*cellules du tableau contact*/
+.container-contact .td-contact { /*cellules du tableau contact*/
   width: 25%;
-  padding: 10px;
-  border: 1px solid black; 
-  background: linear-gradient(#d19c26,#E3CC81); 
-}
-
-@media (max-width: 900px) { /*ajustement page plus petite*/
-  .image-kabba {
-    width: 150px;
-    height:auto;
-  }
-
-  .accueil-texte {
-  font-size: 16px;
-  }
+  padding: 1vw;
+  border: 0.2vw solid black;
+  background: linear-gradient(#d19c26, #E3CC81);
 }
 
 /* _______ COMMANDE ____________*/
@@ -357,11 +342,124 @@ nav { /*navbar container*/
 
 /* __________FOOTER__________ */
 
-.footer-bar { 
+.footer-bar {
   width: 100%;
   display: flex;
   align-items: center;
-  padding:25px 25px;
+  padding: 1vw 4.5vw;
   background: black;
   bottom: 0;
+  z-index: 0;
+  position:relative;
+} 
+
+/* __________PAGE LOGIN__________ */
+
+.container-login {/*le container coupé en 2 formulaire/image*/
+  width: 100%;
+  display: grid;
+  grid-column: 50%;
+  position: relative;
+  z-index: 0;
 }
+
+.titre-login {/*Message de bienvenue*/
+  font-size: 3.5vw; 
+}
+
+.connect {/*connectez vous*/
+  font-size: 2.5vw; 
+}
+
+.connect2 {/*pas encore inscrit? inscrivez vous*/
+  font-size: 2vw; 
+}
+
+.formulaire-login {/*coté gauche : partie formulaire (élément parent)*/
+  padding: 2.5vw;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  position : absolute;
+  justify-content: center;
+}
+
+.legende-login {/*legendes formulaires*/
+  font-size: 1.5vw; 
+}
+.champs-a-remplir { /*champs*/
+  width: 100%;
+  font-size: 1.5vw; 
+  padding: 0.5vw 1.5vw; 
+  background: white;
+  border-radius: 3vw;
+  border: 0.2vw solid #d19c26; 
+}
+
+.btn-connexion {/*bouton connexion*/
+  width: 50%;
+  border: 0.2vw solid black;
+  color: black;
+  background: linear-gradient(#d19c26, #E3CC81);
+  font-family: Montserrat, Helvetica, sans-serif;
+  font-size: 2.5vw; 
+  padding: 0.5vw 1.5vw;
+  border-radius: 3vw;
+  margin-top: 3vw; 
+  cursor: pointer; 
+}
+
+.image-cubes {/*image cubes à droite*/
+  position: relative;
+  height: 100%; 
+  margin-left: 50vw;
+}
+
+/* PAGE REGISTER */
+
+.container-register { /*le container coupé en 2 formulaire/image*/
+  width: 100%;
+  display: grid;
+  grid-column: 50%;
+  position: relative;
+  z-index: 0;
+}
+
+.titre-register { /*titre creez votre compte*/
+  font-size: 3.5vw; 
+}
+
+.formulaire-register {/*coté gauche : formulaire (parent)*/
+  padding: 2.5vw;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  position : absolute;
+  justify-content: center;
+}
+
+.legende-register {/*légendes formulaire*/
+  font-size: 1.5vw; 
+}
+.champs-register { /*champs*/
+  width: 100%;
+  font-size: 1.5vw; 
+  padding: 0.5vw 1.5vw; 
+  background: white;
+  border-radius: 3vw;
+  border: 0.2vw solid #d19c26; 
+}
+
+.btn-creer {/*bouton créer*/
+  width: 50%;
+  border: 0.2vw solid black;
+  color: black;
+  background: linear-gradient(#d19c26, #E3CC81);
+  font-family: Montserrat, Helvetica, sans-serif;
+  font-size: 2.5vw; 
+  padding: 0.5vw 1.5vw;
+  border-radius: 3vw;
+  margin-top: 3vw;
+  cursor: pointer; 
+}
+

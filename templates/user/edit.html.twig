@@ -2,23 +2,31 @@
 
 {% block title %} Modification des informations de l'utilisateur {% endblock %}
 
-{% block body %}
+{% block content %}
+    <div>
+        <form class="form-horizontal" method="post">
+            {% form_theme editUserForm 'bootstrap_4_layout.html.twig' %}
+            {{ form_start(editUserForm, {'attr': {'class': 'form-horizontal'}}) }}
 
-	{% form_theme editUserForm 'bootstrap_4_layout.html.twig' %}
+            <div>
+                {{ form_row(editUserForm.nom) }}
+            </div>
 
-	{{ form_start(editUserForm, {'attr': {'class': 'form-horizontal'}}) }}
+            <div>
+                {{ form_row(editUserForm.prenom) }}
+            </div>
 
-		{{ form_row(editUserForm.nom) }}
+            <div>
+                {{ form_row(editUserForm.telephone) }}
+            </div>
 
-		{{ form_row(editUserForm.prenom) }}
+            <div>
+                {{ form_row(editUserForm.password) }}
+            </div>
 
-		{{ form_row(editUserForm.telephone) }}
+            <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
 
-		{{ form_row(editUserForm.password) }}
-
-		<button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
-
-	{{ form_end(editUserForm) }}
-
-
+            {{ form_end(editUserForm) }}
+        </form>
+    </div>
 {% endblock %}
