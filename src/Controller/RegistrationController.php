@@ -3,65 +3,70 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Adresse;
+use App\Entity\AdresseUser;
 use App\Form\RegistrationFormType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Attribute\Route;
-use App\Repository\UserRepository;
+use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry;
 
 class RegistrationController extends AbstractController
 {
-    #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
+    private $registry;
+
+    public function __construct(ManagerRegistry $registry)
+    {
+        $this->registry = $registry;
+    }
+
+    #[Route('/register', name: 'register')]
+    public function register(Request $request): Response
     {
         $user = new User();
+        $adresse = new Adresse();
+        
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+            // Récupérer les données du formulaire
+            $formData = $form->getData();
 
+            // Enregistrer l'utilisateur
+            $entityManager = $this->registry->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // do anything else you need here, like send an email
+            // Associer l'adresse à l'utilisateur
+            $adresse->setNom($formData->getAdresseNom());
+            $adresse->setNumero($formData->getAdresseNumero());
+            // Autres propriétés d'adresse...
 
-            return $security->login($user, 'App\Security\LoginFormAuthenticator', 'main');
+            // Enregistrer l'adresse
+            $entityManager->persist($adresse);
+            $entityManager->flush();
+
+            // Créer une relation entre l'utilisateur et l'adresse
+            $adresseUser = new AdresseUser();
+            $adresseUser->setLeuser($user);
+            $adresseUser->setLeAdresse($adresse);
+            $entityManager->persist($adresseUser);
+            $entityManager->flush();
+
+            // Rediriger l'utilisateur vers une page de confirmation
+            return $this->redirectToRoute('registration_success');
         }
 
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form,
+            'registrationForm' => $form->createView(),
         ]);
     }
-    
 
-
-    private $userRepository;
-
-    public function __construct(UserRepository $userRepository)
+    #[Route('/register/success', name: 'registration_success')]
+    public function registrationSuccess(): Response
     {
-        $this->userRepository = $userRepository;
-    }
-
-    /**
-     * @Route("/dernier-inscrit", name="dernier_inscrit")
-     */
-    public function dernierInscrit(): Response
-    {
-        $dernierInscrit = $this->userRepository->findLastRegistered();
-
-        return $this->render('dernier_inscrit.html.twig', [
-            'dernierInscrit' => $dernierInscrit,
-        ]);
+        return $this->render('registration/success.html.twig');
     }
 }
