@@ -10,9 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegistrationFormType extends AbstractType
 {
@@ -25,38 +25,31 @@ class RegistrationFormType extends AbstractType
             ->add('telephone', TelType::class, [
                 'constraints' => [
                     new Regex([
-                        'pattern' => '/[0-9]/',
-                        'message' => 'Veuillez entrer un numero de téléphone valide'
-                    ]),
-                    new Length([
-                        'min' => 10,
-                        'max' => 10,
-                        'minMessage' => 'Veuillez entrer un numero de téléphone valide',
-                        'maxMessage' => 'Veuillez entrer un numero de téléphone valide',
+                        'pattern' => '/^[0-9]{10}$/',
+                        'message' => 'Veuillez entrer un numéro de téléphone valide (10 chiffres).'
                     ]),
                 ]
             ])
+            ->add('adresse_nom')
             ->add('agreeTerms', CheckboxType::class, [
-                                'mapped' => false,
+                'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Vous devez accepter nos conditions d\'utilisation.',
                     ]),
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
-                                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Veuillez entrer un mot de passe.',
                     ]),
                     new Length([
                         'min' => 8,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
+                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères.',
+                        // Longueur maximale autorisée par Symfony pour des raisons de sécurité
                         'max' => 4096,
                     ]),
                 ],
