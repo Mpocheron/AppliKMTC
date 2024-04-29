@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dernier inscrit{% endblock %}
+
+{% block body %}
+    <h1>Dernier inscrit</h1>
+
+    {% if user %}
+        <p>Nom: {{ user.nom }}</p>
+        <p>Email: {{ user.email }}</p>
+        <!-- Ajoutez d'autres informations à afficher ici -->
+    {% else %}
+        <p>Aucun utilisateur n'est inscrit pour le moment.</p>
+    {% endif %}
+{% endblock %}

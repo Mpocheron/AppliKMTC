@@ -11,6 +11,12 @@ body {
   background: #444142;
   color: #d19c26;
 }
+.body-sans-base {
+  font-family: Montserrat, Helvetica, sans-serif;
+  background: #444142;
+  color: #d19c26;
+  margin: 3vw 3vw;
+}
 
 /* __________BARRE DE NAVIGATION__________ */
 
@@ -345,10 +351,19 @@ nav { /*navbar container*/
   background: black;
   bottom: 0;
   z-index: 0;
-  position:relative;
+  position: relative;
 } 
 
 /* __________PAGE LOGIN__________ */
+
+.formulaire-login {/*coté gauche : partie formulaire (élément parent)*/
+  padding: 2.5vw;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  position : absolute;
+  justify-content: center;
+}
 
 .container-login {/*le container coupé en 2 formulaire/image*/
   width: 100%;
@@ -370,14 +385,7 @@ nav { /*navbar container*/
   font-size: 2vw; 
 }
 
-.formulaire-login {/*coté gauche : partie formulaire (élément parent)*/
-  padding: 2.5vw;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  position : absolute;
-  justify-content: center;
-}
+
 
 .legende-login {/*legendes formulaires*/
   font-size: 1.5vw; 
@@ -404,12 +412,6 @@ nav { /*navbar container*/
   cursor: pointer; 
 }
 
-.image-cubes {/*image cubes à droite*/
-  position: relative;
-  height: 100%; 
-  margin-left: 50vw;
-}
-
 /* PAGE REGISTER */
 
 .container-register { /*le container coupé en 2 formulaire/image*/
@@ -426,19 +428,40 @@ nav { /*navbar container*/
 
 .formulaire-register {/*coté gauche : formulaire (parent)*/
   padding: 2.5vw;
-  margin: auto;
+  /* margin: auto; */
   display: flex;
   flex-direction: column;
   position : absolute;
   justify-content: center;
 }
 
+.formulaire-register2 {/*coté droit*/
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-left: 50vw;
+}
+
 .legende-register {/*légendes formulaire*/
   font-size: 1.5vw; 
 }
+
+.legende-register2 {/*légendes formulaire*/
+  font-size: 1vw; 
+}
+
 .champs-register { /*champs*/
   width: 100%;
   font-size: 1.5vw; 
+  padding: 0.5vw 1.5vw; 
+  background: white;
+  border-radius: 1.5vw;
+  border: 0.2vw solid #d19c26; 
+}
+
+.champs-register2 { /*champs*/
+  width: 100%;
+  font-size: 1vw; 
   padding: 0.5vw 1.5vw; 
   background: white;
   border-radius: 3vw;
@@ -456,5 +479,11 @@ nav { /*navbar container*/
   border-radius: 3vw;
   margin-top: 3vw;
   cursor: pointer; 
+}
+
+.image-cubes {/*image cubes à droite*/
+  position: relative;
+  height : fit-content;
+  margin-left: 50vw;
 }
 

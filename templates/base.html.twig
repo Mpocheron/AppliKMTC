@@ -38,14 +38,32 @@
             </div>
         </div>
 
-        <div class="nav-authentication">
+        {# <div class="nav-authentication">
             <a href="login" class="user-toggler" aria-label="Sign in page">
             <img src="img/account.png" class="user-toggler img" alt="user-icon">
             </a>
             <div class="sign-btns">
     <button type="button" onclick="window.location.href='login'">Connexion</button>
     <button type="button" onclick="window.location.href='register'">Inscription</button>
+</div> #}
+<div class="nav-authentication">
+    {% if app.user %}
+    <div class="sign-btns">
+            <button type="button" onclick="window.location.href='profil'">Mon profil</button>
+            <button type="button" onclick="window.location.href='logout'">Déconnexion</button>
+        </div>
+        <a href="home_user" class="user-toggler" aria-label="Mon Profil">
+            <img src="img/account.png" class="user-toggler img" alt="user-icon">
+        </a>
+    {% else %}
+        <div class="sign-btns">
+            <button type="button" onclick="window.location.href='login'">Connexion</button>
+            <button type="button" onclick="window.location.href='register'">Inscription</button>
+        </div>
+    {% endif %}
 </div>
+
+
     </nav>
 
     <main class="main-content">
