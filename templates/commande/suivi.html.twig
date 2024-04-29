@@ -14,27 +14,36 @@
     </div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
-            crossorigin=""></script>
-            <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
-            <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
+            crossorigin="">
+    </script>
     <script>
-        var villes = {
-            "Paris": {"lat": 48.8566, "long": 2.3522},
-            "Marseille": {"lat": 43.2963, "long": 5.3748},
-            "Lyon": {"lat": 45.7578, "long": 4.8320},
-            "Toulouse": {"lat": 43.6045, "long": 1.4440},
-            "Nice": {"lat": 43.7034, "long": 7.2663}
-        };
         var map = L.map('map').setView([48.8566, 2.3522], 5);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        for (ville in villes) {
-            var marqueur = L.marker([villes[ville].lat, villes[ville].long]).addTo(map)
-                .bindPopup("<p>"+ ville +"</p>")
-                .openPopup();
+                // Utiliser les données JSON des relais passées depuis le contrôleur
+        var relaisJson = {{ relaisJson|raw }};
+        for (var i = 0; i < relaisJson.length; i++) {
+            var relai = relaisJson[i];
+            
+            // Vérifier si les données de localisation sont présentes et non vides
+            if (relai.latitude && relai.longitude) {
+                var latitude = relai.latitude;
+                var longitude = relai.longitude;
+                
+                // Créer le marqueur uniquement si les données sont définies
+                L.marker([latitude, longitude]).addTo(map)
+                    .bindPopup("<p>"+ relai.nom +"</p>")
+                    .openPopup();
+            } else {
+                // Afficher un message d'avertissement ou ignorer ce relai s'il manque des données
+                // console.warn("Les données de localisation pour le relai sont incomplètes :", relai);
+            }
         }
+
+        console.log(relaisJson);
+
     </script>
 
 {% endblock %}
