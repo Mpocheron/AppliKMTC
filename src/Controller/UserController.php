@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\UserRepository;
 
 class UserController extends AbstractController
 {
@@ -69,6 +70,41 @@ class UserController extends AbstractController
         
         
     }
+    #[Route('/user/{id}', name: 'app_user_details')]
+    public function details(int $id, UserRepository $userRepository): Response
+    {
+        // Récupère le user depuis le repository
+        $user = $userRepository->find($id);
+
+        // Vérifie si le user existe
+        if (!$user) {
+            throw $this->createNotFoundException('Utilisateur non trouvé');
+        }
+
+        // Rend le template Twig avec les informations du relais
+        return $this->render('user/details.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    #[Route('/profil', name: 'app_user_profil')]
+public function profil(): Response
+{
+    // Récupère l'utilisateur connecté
+    $user = $this->getUser();
+
+    // Vérifie si l'utilisateur est connecté
+    if (!$user) {
+        // Redirige l'utilisateur vers la page de connexion s'il n'est pas connecté
+        return $this->redirectToRoute('app_login');
+    }
+
+    // Rend le template Twig avec les informations de l'utilisateur connecté
+    return $this->render('user/profil.html.twig', [
+        'user' => $user,
+    ]);
+}
+
 
 
 }

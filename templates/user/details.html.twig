@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{# {% block title %}Détails de l'utilisateur{% endblock %} #}
+
+
+{% block content %}
+<div class="body-sans-base"> 
+<br><br><br><br><br><br><br>
+    <h1>Détails de l'utilisateur</h1>
+    <dl>
+<dt>Nom de l'utilisateur :</dt>
+<dd>{{ user.nom }}</dd>
+<dt>Prénom de l'utilisateur :</dt>
+<dd>{{ user.prenom }}</dd>
+<dt>Adresse de l'utilisateur :</dt>
+{# <dd>{{ user.adresse }}</dd>
+<dt>Téléphone de l'utilisateur :</dt> #}
+<dd>{{ user.telephone }}</dd>
+<dt>Email de l'utilisateur :</dt>
+<dd>{{ user.email }}</dd>
+{# <dt>Rôle de l'utilisateur :</dt>
+<dd>{{ user.role }}</dd> #}
+{# <dt>Préférences de l'utilisateur :</dt>
+<dd>{{ user.preferences }}</dd> #}
+{# <dt>Commande de l'utilisateur :</dt>
+<dd>{{ user.commande }}</dd> #}
+    </dl>
+</div>
+{% endblock %}
