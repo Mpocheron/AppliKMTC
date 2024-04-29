@@ -1,0 +1,16 @@
+{# {% extends 'base.html.twig' %} #}
+
+{% block body %}
+
+    {{ form_errors(adresseForm) }}
+
+    {{ form_start(adresseForm) }}
+        {{ form_row(adresseForm.numero) }}
+        {{ form_row(adresseForm.nom) }}
+        {{ form_row(adresseForm.codePostal) }}
+        {{ form_row(adresseForm.ville) }}
+
+        <button type="submit" class="btn">Créer</button>
+    {{ form_end(adresseForm) }}
+
+{% endblock %}
