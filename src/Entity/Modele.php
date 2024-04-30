@@ -30,7 +30,7 @@ class Modele
     #[ORM\Column]
     private ?int $poidsMax = null;
 
-    #[ORM\OneToMany(mappedBy: 'leModel', targetEntity: Casier::class)]
+    #[ORM\OneToMany(mappedBy: 'leModele', targetEntity: Casier::class)]
     private Collection $lesCasiers;
 
     public function __construct()
@@ -115,7 +115,7 @@ class Modele
     {
         if (!$this->lesCasiers->contains($lesCasier)) {
             $this->lesCasiers->add($lesCasier);
-            $lesCasier->setLeModel($this);
+            $lesCasier->setLeModele($this);
         }
 
         return $this;
@@ -125,8 +125,8 @@ class Modele
     {
         if ($this->lesCasiers->removeElement($lesCasier)) {
             // set the owning side to null (unless already changed)
-            if ($lesCasier->getLeModel() === $this) {
-                $lesCasier->setLeModel(null);
+            if ($lesCasier->getLeModele() === $this) {
+                $lesCasier->setLeModele(null);
             }
         }
 

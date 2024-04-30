@@ -14,7 +14,7 @@ class Casier
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'lesCasiers')]
-    private ?Modele $leModel = null;
+    private ?Modele $leModele = null;
 
     #[ORM\ManyToOne(inversedBy: 'lesCasiers')]
     #[ORM\JoinColumn(nullable: false)]
@@ -31,16 +31,24 @@ class Casier
         return $this->id;
     }
 
-    public function getLeModel(): ?Modele
+    public function getleModele(): ?Modele
     {
-        return $this->leModel;
+        return $this->leModele;
     }
 
-    public function setLeModel(?Modele $leModel): static
+    public function setleModele(?Modele $leModele): static
     {
-        $this->leModel = $leModel;
+        $this->leModele = $leModele;
 
         return $this;
+    }
+
+    /**
+     * Récupère le nom du modèle du casier
+     */
+    public function __toString(): string
+    {
+        return $this->leModele->getNom();
     }
 
     public function getLeRelais(): ?Relais
