@@ -53,6 +53,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Utilisateurs', 'fa-solid fa-user', User::class);
         yield MenuItem::linkToCrud('Commandes', 'fa-regular fa-envelope-open', Commande::class);
         yield MenuItem::linkToCrud('Relais', 'fa-solid fa-warehouse', Relais::class);
+        yield MenuItem::linkToUrl('Ajouter un relais', 'fa-solid fa-plus', $this->generateUrl('create_relais'));
     }
 
     public function configureActions(): Actions
