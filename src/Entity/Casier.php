@@ -24,7 +24,7 @@ class Casier
     private ?Commande $laCommande = null;
 
     #[ORM\Column]
-    private ?bool $utilise = null;
+    private ?bool $utilise = false;
 
     public function getId(): ?int
     {
