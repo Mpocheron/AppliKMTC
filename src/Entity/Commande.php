@@ -45,9 +45,6 @@ class Commande
     #[ORM\OneToOne(inversedBy: 'laCommande', cascade: ['persist', 'remove'])]
     private ?Casier $leCasier = null;
 
-    #[ORM\Column]
-    private ?int $NombreColis = 1;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nomDestinataire = null;
 
@@ -198,18 +195,6 @@ class Commande
     public function setLeCasier(?Casier $leCasier): static
     {
         $this->leCasier = $leCasier;
-
-        return $this;
-    }
-
-    public function getNombreColis(): ?int
-    {
-        return $this->NombreColis;
-    }
-
-    public function setNombreColis(int $NombreColis): static
-    {
-        $this->NombreColis = $NombreColis;
 
         return $this;
     }
