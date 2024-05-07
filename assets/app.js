@@ -1,3 +1,4 @@
+
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -7,4 +8,5 @@
 import './styles/app.scss';
 import './scriptnavbar.js';
 import 'bootstrap';
+import './bootstrap.js';
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
