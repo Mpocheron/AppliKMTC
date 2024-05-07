@@ -133,6 +133,10 @@ class Adresse
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return $this->numero. ', ' .$this->nom. ', ' .$this->codePostal. ' ' .$this->ville;
+    }
     /**
      * @return Collection<int, AdresseUser>
      */

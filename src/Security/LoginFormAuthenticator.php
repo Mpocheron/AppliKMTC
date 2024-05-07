@@ -46,7 +46,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     {
         // Si l'utilisateur est admin, on le redirige vers la page admin
         $user = $token->getUser();
-        if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+        if (in_array('ROLE_ADMIN', $user->getRoles(), true) || in_array('ROLE_SUPER_ADMIN', $user->getRoles(), true)) {
             return new RedirectResponse($this->urlGenerator->generate('admin'));
         }
 
