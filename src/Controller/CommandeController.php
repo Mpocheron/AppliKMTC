@@ -12,6 +12,7 @@ use App\Form\CommandeFormType;
 use App\Entity\Commande;
 use App\Entity\Adresse;
 use App\Entity\User;
+use App\Entity\Relais;
 
 class CommandeController extends AbstractController
 {
@@ -33,11 +34,39 @@ class CommandeController extends AbstractController
         $commande = new Commande();
 
         // Créer le formulaire avec l'instance de Commande
-        $commandeform = $this->createForm(CommandeFormType::class, $commande);
+        $commandeform = $this->createForm(CommandeFormType::class, $commande, [
+        'relais_choices' => $entityManager->getRepository(Relais::class)->findAll()
+        ]);
         $commandeform->handleRequest($request);
 
         // Vérifiez si le formulaire est soumis et valide
         if ($commandeform->isSubmitted() && $commandeform->isValid()) {
+
+
+            // Récupérer le relais sélectionné (si nécessaire)
+            $relais = $commandeform->get('relais')->getData();
+
+            /*
+            $numero = $commandeForm.get('numero').getData();
+            $nom = $commandeForm.get('nom').getData();
+            $codePostal = $commandeForm.get('codePostal').getData();
+            $ville = $commandeForm.get('ville').getData();
+
+            // Créer une nouvelle adresse avec les parties récupérées
+            $adresse = new Adresse();
+            $adresse.setNumero($numero);
+            $adresse.setNom($nom);
+            $adresse.setCodePostal($codePostal);
+            $adresse.setVille($ville);
+
+            // Persister l'adresse
+            $entityManager->persist($adresse);
+            $entityManager->flush();
+
+            // Lier la nouvelle adresse à la commande
+            $commande->setAdresseDestination($adresse);
+            */
+
             // Sauvegarder les données de commande
             $entityManager->persist($commande);
             $entityManager->flush();  
@@ -49,7 +78,7 @@ class CommandeController extends AbstractController
         }
 
         // Si le formulaire a été soumis mais n'est pas valide
-        if ($commandeform->isSubmitted() && !$commandeform->isValid()) {
+        else {
             // Ajouter un message flash d'erreur
             $this->addFlash('error', 'Une erreur est survenue lors de la validation de la commande.');
         }
