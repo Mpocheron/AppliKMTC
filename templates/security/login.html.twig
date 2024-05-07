@@ -10,16 +10,15 @@
     
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
-
     {% if app.user %}
         <div class="mb-3">
             You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %} #}
-    
-    
+
+
     <table><tr>
-    
+
     <td class="formulaire-login">
     <br><br><br><br><br>
     <div class="titre-login">Bienvenue chez KMTC</div>
@@ -44,7 +43,7 @@
     <button class="btn-connexion" type="submit">
         Connexion
     </button>
-    
+
      </td></div>
 
 <td> <img src="img/cubes2.png" class="image-cubes"/></td></tr></table>
