@@ -2,9 +2,102 @@
 
 {% block title %}Suivi de colis{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Ajout de styles pour le layout et la mise en page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+            border-radius: 5px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .table th, .table td {
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .table th {
+            background-color: #f7f7f7;
+            font-weight: bold;
+        }
+        
+        #map {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #fff;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
-    <h1>Suivi de commande</h1>
-    <p>Voici le suivi de votre commande :</p>
+    <!-- Contenu de la page -->
+    <div class="container">
+        <h1>Suivi de commande</h1>
+        <p>Voici le suivi de votre commande :</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Statut</th>
+                    <th>Adresse d'expédition</th>
+                    <th>Adresse de destination</th>
+                    <th>Numéro de commande</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for commande in listecommande %}
+                    <tr>
+                        <td>{{ commande.Status.leEtat.typeEtat }}</td>
+                        <td>{{ commande.adresseExpedition.nom }}</td>
+                        <td>{{ commande.adresseDestination.nom }}</td>
+                        <td>{{ commande.id }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Carte des relais -->
     <div class="container">
         <div class="row">
             <div>
@@ -12,12 +105,14 @@
             </div>
         </div>
     </div>
+    <!-- Script Leaflet pour la carte -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
             crossorigin="">
     </script>
+    <!-- Script pour la carte et les relais -->
     <script>
-        var map = L.map('map').setView([48.8566, 2.3522], 5);
+        var map = L.map('map').setView([46.8566, 2.3522], 5);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
@@ -26,19 +121,19 @@
         var relaisJson = {{ relaisJson|raw }};
         for (var i = 0; i < relaisJson.length; i++) {
             var relai = relaisJson[i];
-            
+                
             // Vérifier si les données de localisation sont présentes et non vides
             if (relai.latitude && relai.longitude) {
                 var latitude = relai.latitude;
                 var longitude = relai.longitude;
-                
+                    
                 // Créer le marqueur uniquement si les données sont définies
                 L.marker([latitude, longitude]).addTo(map)
                     .bindPopup("<p>"+ relai.nom +"</p>")
                     .openPopup();
             } else {
-                // Afficher un message d'avertissement ou ignorer ce relai s'il manque des données
-                // console.warn("Les données de localisation pour le relai sont incomplètes :", relai);
+                    // Afficher un message d'avertissement ou ignorer ce relai s'il manque des données
+                    // console.warn("Les données de localisation pour le relai sont incomplètes :", relai);
             }
         }
 

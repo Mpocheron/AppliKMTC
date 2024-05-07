@@ -47,9 +47,9 @@ class CommandeController extends AbstractController
         ]);
     }
 
-    #[Route('user/suivi/{id}', name: 'app_suivi_commande')]
+    #[Route('user/suivi', name: 'app_suivi_commande')]
 
-    public function suivi_commande(CommandeRepository $commandeRepository, int $id, RelaisRepository $relaisRepository, AdresseRepository $adresseRepository, SerializerInterface $serializer): Response
+    public function suivi_commande(CommandeRepository $commandeRepository, RelaisRepository $relaisRepository, AdresseRepository $adresseRepository, SerializerInterface $serializer): Response
     {
         
             // Récupérer les données des relais depuis la base de données
@@ -77,12 +77,15 @@ class CommandeController extends AbstractController
                 ];
             }
         }
-
         // Sérialiser les données des relais en JSON
         $relaisJson = $serializer->serialize($relaisCoordinates, 'json');
 
+        // Récupérer les commandes depuis la base de données
+        $listecommande = $commandeRepository->findAll();
+
         return $this->render('commande/suivi.html.twig', [
             'relaisJson' => $relaisJson,
+            'listecommande' => $listecommande,
         ]);
     }
 }
