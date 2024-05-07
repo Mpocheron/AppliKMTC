@@ -5,15 +5,17 @@
 {% block title %}Détails du Relais{% endblock %}
 
 {% block content %}
+ <div class="body-sans-base">
 <br><br><br><br><br><br><br>
     <h1>Détails du Relais</h1>
     <dl>
         <dt>Nom du Relais:</dt>
 <dd>{{ relais.nom }}</dd>
 <dt>Adresse:</dt>
-<dd>{{ relais.leAdresse.nom }}</dd>
+<dd>{{ relais.leAdresse.numero }} {{ relais.leAdresse.nom }} - {{ relais.leAdresse.codePostal }} {{ relais.leAdresse.ville }}</dd>
 <dt>Nombre de Casiers:</dt>
 <dd class="{{ relais.denombrerCasier() > 2 ? 'sup55' : 'inf55' }}">{{ relais.denombrerCasier() }}</dd>
 
     </dl>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br></div>
 {% endblock %}

@@ -6,6 +6,7 @@ use App\Entity\Adresse;
 use App\Entity\Casier;
 use App\Entity\Commande;
 use App\Entity\User;
+use App\Entity\Relais;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -47,7 +48,7 @@ class CommandeFormType extends AbstractType
                 },
                 'label' => 'Adresse de facturation'
             ])
-        // je n'ai pas intégré les adresses expedition (car récupéré avec user en vue) et destination (car relais colis)
+        
             ->add('hauteur', IntegerType::class, [
                 'label' => 'Hauteur (en cm)',
                 'required' => true,
@@ -92,15 +93,7 @@ class CommandeFormType extends AbstractType
                     ]),
                 ],
             ])    
-            /* ->add('leUser', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'nom',
-                'label' => 'Client'
-            ]) */
             
-
-            // ici mettre le relais
-            //->add('nom', EntityType::class, ['mapped' => false ])
             ->add('nomDestinataire', TextType::class, [
                 'label' => 'Nom',
                 'required' => true,
@@ -131,6 +124,19 @@ class CommandeFormType extends AbstractType
                     ]),
                 ],
             ])
+            
+            // Deroulant choix du point relais
+            ->add('relais', EntityType::class, [
+                'class' => Relais::class,
+                'choices' => $options['relais_choices'],  // Utilisez le paramètre fourni
+                'choice_label' => 'nom', // Assurez-vous que l'entité Relais a un champ "nom" ou similaire
+                'mapped' => false, // Parce que ce n'est pas une relation directe
+                'label' => 'Choix du relais',
+                'placeholder' => 'Sélectionner un relais', // Optionnel
+                'required' => false, // Ajustez selon vos besoins
+            ])
+            
+            /*
             ->add('adresseDestination', EntityType::class, [
                 'class' => Adresse::class,
                 'choice_label' => function (Adresse $adresse) {
@@ -138,9 +144,8 @@ class CommandeFormType extends AbstractType
                     return $adresse->getNumero() . ' ' . $adresse->getNom() . ', ' . $adresse->getCodePostal() . ' ' . $adresse->getVille();
                 },
                 'label' => 'Adresse de Destination' 
-            ])
+            ]) */
             
-
             ->add('COMMANDER', SubmitType::class,['label'=>'ENVOYER'])
         ;
     }
@@ -150,5 +155,6 @@ class CommandeFormType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Commande::class,
         ]);
+        $resolver->setDefined(['relais_choices']);  // Autoriser des paramètres supplémentaires
     }
 }

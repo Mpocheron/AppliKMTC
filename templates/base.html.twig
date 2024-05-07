@@ -11,16 +11,15 @@
         {% endblock %}
 
     {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+      {{ encore_entry_script_tags('app') }}
         {% endblock %}
 
 
 </head>
 <body>
     <nav>
-        <a href="home#accueil" class="nav-icon" aria-label="homepage" aria-current="page">
-        <img class="img" src="img/logo-2.png"/>
+        <a href="/home#accueil" class="nav-icon" aria-label="homepage" aria-current="page">
+        <img class="img" src="{{ asset('img/logo-2.png') }}" alt="Logo"/>
             <span>C'est dans la boîte</span>
         </a>
 
@@ -39,32 +38,28 @@
             </div>
         </div>
 
-        {# <div class="nav-authentication">
-            <a href="login" class="user-toggler" aria-label="Sign in page">
-            <img src="img/account.png" class="user-toggler img" alt="user-icon">
-            </a>
-            <div class="sign-btns">
-    <button type="button" onclick="window.location.href='login'">Connexion</button>
-    <button type="button" onclick="window.location.href='register'">Inscription</button>
-</div> #}
 <div class="nav-authentication">
     {% if app.user %}
-    <div class="sign-btns">
-            <button type="button" onclick="window.location.href='profil'">Mon profil</button>
+        <a href="profil" class="user-toggler" aria-label="Mon profil">
+            <img src="{{ asset('img/account_connected.png') }}" class="user-toggler img" alt="user-icon">
+        </a>
+        <div class="sign-btns">
+        <button type="button" onclick="window.location.href='profil'">Mon profil</button>
             <button type="button" onclick="window.location.href='logout'">Déconnexion</button>
         </div>
-        <a href="home_user" class="user-toggler" aria-label="Mon Profil">
-            <img src="img/account.png" class="user-toggler img" alt="user-icon">
-        </a>
+        <a href="logout" class="user-toggler" aria-label="Se déconnecter">
+            <img src="{{ asset('img/se-deconnecter2.png') }}" alt="logout-icon">
+        </a></div>
     {% else %}
+        <a href="login" class="user-toggler" aria-label="Se connecter">
+            <img src="{{ asset('img/account.png') }}" class="user-toggler img" alt="user-icon">
+        </a>
         <div class="sign-btns">
             <button type="button" onclick="window.location.href='login'">Connexion</button>
             <button type="button" onclick="window.location.href='register'">Inscription</button>
         </div>
     {% endif %}
 </div>
-
-
     </nav>
 
     <main class="main-content">

@@ -24,4 +24,5 @@ services:
     # please note that last definitions always *replace* previous ones
     App\Controller\RegistrationController:
         arguments:
-            $userRepository: '@App\Repository\UserRepository'
+             $registry: '@doctrine'
+            # $userRepository: '@App\Repository\UserRepository'
