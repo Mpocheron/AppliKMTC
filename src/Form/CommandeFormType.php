@@ -137,13 +137,8 @@ class CommandeFormType extends AbstractType
             ])
             
             
-            ->add('adresseDestination', EntityType::class, [
-                'class' => Adresse::class,
-                'choice_label' => function (Adresse $adresse) {
-                    // Construire l'étiquette de choix personnalisée avec plusieurs colonnes
-                    return $adresse->getNumero() . ' ' . $adresse->getNom() . ', ' . $adresse->getCodePostal() . ' ' . $adresse->getVille();
-                },
-                'label' => 'Adresse de Destination' 
+            ->add('adresseDestination', AdresseDestinationType::class, [
+                'label' => 'Adresse de Destination',
             ])
             
             ->add('COMMANDER', SubmitType::class,['label'=>'ENVOYER'])
