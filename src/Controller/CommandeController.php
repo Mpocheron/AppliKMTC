@@ -46,26 +46,21 @@ class CommandeController extends AbstractController
             // Récupérer le relais sélectionné (si nécessaire)
             $relais = $commandeform->get('relais')->getData();
 
-            /*
-            $numero = $commandeForm.get('numero').getData();
-            $nom = $commandeForm.get('nom').getData();
-            $codePostal = $commandeForm.get('codePostal').getData();
-            $ville = $commandeForm.get('ville').getData();
+             // Obtenir les données de l'adresse de destination
+            $adresseDestination = $commandeform->get('adresseDestination')->getData();
 
-            // Créer une nouvelle adresse avec les parties récupérées
-            $adresse = new Adresse();
-            $adresse.setNumero($numero);
-            $adresse.setNom($nom);
-            $adresse.setCodePostal($codePostal);
-            $adresse.setVille($ville);
+            if ($adresseDestination !== null) {
+                // Si l'adresse n'est pas persisté
+                if (!$entityManager->contains($adresseDestination)) {
+                    // Persister la nouvelle adresse
+                    $entityManager->persist($adresseDestination);
+                    $entityManager->flush(); // Sauvegarder pour obtenir un ID
+                }
 
-            // Persister l'adresse
-            $entityManager->persist($adresse);
-            $entityManager->flush();
+                // Associer l'adresse de destination à la commande
+                $commande->setAdresseDestination($adresseDestination);
+            }
 
-            // Lier la nouvelle adresse à la commande
-            $commande->setAdresseDestination($adresse);
-            */
 
             // Sauvegarder les données de commande
             $entityManager->persist($commande);

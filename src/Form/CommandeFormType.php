@@ -136,7 +136,7 @@ class CommandeFormType extends AbstractType
                 'required' => false, // Ajustez selon vos besoins
             ])
             
-            /*
+            
             ->add('adresseDestination', EntityType::class, [
                 'class' => Adresse::class,
                 'choice_label' => function (Adresse $adresse) {
@@ -144,7 +144,7 @@ class CommandeFormType extends AbstractType
                     return $adresse->getNumero() . ' ' . $adresse->getNom() . ', ' . $adresse->getCodePostal() . ' ' . $adresse->getVille();
                 },
                 'label' => 'Adresse de Destination' 
-            ]) */
+            ])
             
             ->add('COMMANDER', SubmitType::class,['label'=>'ENVOYER'])
         ;
