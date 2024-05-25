@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Form\CommandeFormType;
 use App\Entity\Commande;
 use App\Entity\Adresse;
+use App\Entity\AdresseUser;
 use App\Entity\User;
 use App\Entity\Relais;
 
@@ -29,6 +30,13 @@ class CommandeController extends AbstractController
     {
         // Obtenir l'utilisateur connecté
         $user = $this->getUser(); 
+
+        
+        $adresse = null;
+        $adresseUserEntity = $entityManager->getRepository(AdresseUser::class)->findOneBy(['leuser' => $user]);
+        if ($adresseUserEntity) {
+            $adresse = $adresseUserEntity->getLeAdresse();
+        }
         
         // Créer une nouvelle instance de Commande
         $commande = new Commande();
@@ -41,7 +49,7 @@ class CommandeController extends AbstractController
 
         // Vérifiez si le formulaire est soumis et valide
         if ($commandeform->isSubmitted() && $commandeform->isValid()) {
-
+            
 
             // Récupérer le relais sélectionné (si nécessaire)
             $relais = $commandeform->get('relais')->getData();
@@ -80,6 +88,7 @@ class CommandeController extends AbstractController
 
         return $this->render('commande/index.html.twig', [
             'commandeform' => $commandeform->createView(),
+            'adresse' => $adresse,
             'user' => $this->getUser(),
         ]);
     }
