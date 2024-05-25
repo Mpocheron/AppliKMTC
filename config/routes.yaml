@@ -3,3 +3,18 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+# Route pour la page d'accueil
+home:
+    path: /
+    controller: App\Controller\HomeController::index
+
+# Route pour la page de succès de la commande
+commande_success:
+    path: /commande/success
+    controller: App\Controller\CommandeController::success
+
+# Route pour la page de commande
+commande_recapitulatif:
+    path: /commande/recap/{id}
+    controller: App\Controller\CommandeController::recapCommande

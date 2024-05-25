@@ -3,11 +3,16 @@
 {% block title %}Commande{% endblock %}
 
 {% block content %}
-
+<span class="marge-navbar"> </span>
     <h1>Résultat de la commande</h1>
 
     {# Afficher le message directement transmis #}
     {% if message %}
         <div class="alert alert-success">{{ message }}</div>
+        <p>Récapitulatif de la commande :</p>
+<a href="{{ path('app_commande_recap', {'id': commande.id}) }}">Voir le récapitulatif de la commande</a>
+        
+        <a href="{{ path('home') }}">Retour à l'accueil</a>
     {% endif %}
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 {% endblock %}

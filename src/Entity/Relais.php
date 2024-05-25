@@ -105,6 +105,23 @@ class Relais
             // Retourne les informations sous forme de tableau associatif
             return $nombreCasiers;
         }
+
+    public function getAdresseComplete(): string
+{
+    // Vérifie si l'adresse existe
+    if ($this->leAdresse) {
+        // Construit l'adresse complète
+        return sprintf(
+            '%s %s, %s %s',
+            $this->leAdresse->getNumero(),
+            $this->leAdresse->getNom(),
+            $this->leAdresse->getCodePostal(),
+            $this->leAdresse->getVille()
+        );
+    }
     
+    return 'Adresse non disponible';
+}
+
 
 }

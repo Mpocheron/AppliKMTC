@@ -2,7 +2,8 @@ body {
     background-color: skyblue;
 }
 
-@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
+@import '~bootstrap';
 @import 'globals';
 @import 'style';
 @import 'styleguide';

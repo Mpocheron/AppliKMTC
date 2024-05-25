@@ -1,69 +1,77 @@
 {% extends 'base.html.twig' %}
 
-{# {% block title %}Commande{% endblock %} #}
-
 {% block content %}
 
-<div class="formulaire-commande">
-    <h1 class="text-center">COMMANDE</h1>
-    
-    {# Afficher les messages flash de succès et d'erreur #}
-    {#{% for flash in app.session.flashBag.get('success') %}
-        <div class="alert alert-success">{{ flash }}</div>
-    {% endfor %}
-    
-    {% for flash in app.session.flashBag.get('error') %}
-        <div class="alert alert-danger">{{ flash }}</div>
-    {% endfor %} #}
+<p class="marge-navbar"> </p>
+    <div class="formulaire-commande">
+    <h1>COMMANDE</h1>
 
     {{ form_start(commandeform) }}
     {{ form_errors(commandeform) }} {# Afficher les erreurs globales du formulaire #}
+
     
-    <div class="card w-75">
+    
+    {# <div class="card w-75">
         <div class="card-body">
-            <h5 class="card-title">Nouvelle Commande</h5>
-            
-            {# Affichage du nom de l'utilisateur, si disponible #}
+            <h5 class="card-title">Nouvelle Commande</h5> #}
+
             {% if user %}
-                <p>Bienvenue, {{ user.nom }}!</p>
+                <p>Bienvenue {{ user.prenom }} !</p>
             {% endif %}
 
-            <h5> Informations Expediteur</h5>
+            <h2>Informations Expéditeur</h2>
             <br>
-            {# Champ pour l'adresse de facturation #}
-            <h5> Adresse de Facturation</h5>
-            {{ form_row(commandeform.adresseFacturation) }}
-            <p>Veuillez remplir les dimensions de votre colis </p>
+            <table> <tr> <td>
+            <h5>Adresse de Facturation</h5>
+            {{ form_widget(commandeform.adresseFacturation, {'attr': {'class': 'champs-adresses'}}) }}
+            </td> <td>
+            <h5>Adresse d'expédition</h5>
+             {{ form_widget(commandeform.adresseExpedition, {'attr': {'class': 'champs-adresses'}}) }}
+             </td></tr></table>
+            {# <p>Veuillez remplir les dimensions de votre colis</p>
+
+            {{ form_widget(commandeform.hauteur) }}
+            {{ form_widget(commandeform.largeur) }}
+            {{ form_widget(commandeform.longueur) }}
+            {{ form_widget(commandeform.poids) }} #}
+
+<h3>Veuillez remplir les dimensions de votre colis </h3>
             
             {# Champs pour les dimensions du colis #}
+            <div class="format-colis">
             {{ form_row(commandeform.hauteur) }}
             {{ form_row(commandeform.largeur) }}
             {{ form_row(commandeform.longueur) }}
             {{ form_row(commandeform.poids) }}
-
-            <h5> Informations Destinataire</h5>
-            <div class="form-group">
-                {{ form_row(commandeform.nomDestinataire) }}
-                {{ form_row(commandeform.prenomDestinataire) }}
-                {{ form_row(commandeform.relais) }}
-                {#{{ form_row(commandeform.adresseDestination) }}#}
-                
             </div>
+            
+            <h2>Informations Destinataire</h2>
+            <table class="identite-destinataire"><tr> <td>
+                {{ form_row(commandeform.nomDestinataire, {'attr': {'class': 'champs-identite-destinataire'}}) }}</td>
+               <td> {{ form_row(commandeform.prenomDestinataire, {'attr': {'class': 'champs-identite-destinataire'}}) }}</td>
+                </tr></table>
 
-            {# Bouton de soumission du formulaire #}
-            {{ form_widget(commandeform.COMMANDER, {'attr': {'class': 'btn btn-primary'}}) }}
-        </div>
-    </div>
-    
+<table class="choix-destination"><tr> <td>
+            <h4 class="titre-choix-destination"> Choisissez d'envoyer votre colis dans un de nos relais</h4>   
+                {{ form_row(commandeform.relais, {'attr': {'class': 'champs-identite-destinataire'}}) }}</td>
+               <td>
+            <h4 class="titre-choix-destination"> Ou bien à l'adresse de votre destinataire </h4>
+           
+             {{ form_widget(commandeform.adresseDestination, {'attr': {'class': 'champs-adresses'}}) }}
+</td>
+                </tr></table>
+            {{ form_widget(commandeform.COMMANDER, {'attr': {'class': 'btn-creer'}}) }}
+        
+
     {{ form_end(commandeform) }}
-    
+
     <div class="card w-50 mt-4">
         <div class="card-body">
             <h5 class="card-title">Suivi de Commande</h5>
             <p class="card-text">Liste des commandes en cours</p>
-            <a href="#" class="btn btn-primary">Suivre ma commande</a>
+            <a href="#" class="btn-creer">Suivre ma commande</a>
         </div>
-    </div>
-</div>
+    {# </div>#}
+</div> 
 
 {% endblock %}

@@ -2,10 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Adresse;
 use App\Entity\Commande;
-use App\Entity\Relais;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -13,32 +10,22 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Relais;
 
-class CommandeFormType extends AbstractType
+class CommandeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('adresseExpedition', EntityType::class, [
-                'class' => Adresse::class,
-                'choice_label' => function ($adresse) {
-                    return $adresse->getNumero() . ' ' . $adresse->getNom() . ', ' . $adresse->getCodePostal() . ' ' . $adresse->getVille();
-                },
-                'label' => 'Adresse d\'expédition'
+            ->add('adresseExpedition', AdresseType::class, [
+                'label' => 'Adresse d\'expédition',
             ])
-            ->add('adresseDestination', EntityType::class, [
-                'class' => Adresse::class,
-                'choice_label' => function ($adresse) {
-                    return $adresse->getNumero() . ' ' . $adresse->getNom() . ', ' . $adresse->getCodePostal() . ' ' . $adresse->getVille();
-                },
-                'label' => 'Adresse de destination'
+            ->add('adresseDestination', AdresseType::class, [
+                'label' => 'Adresse de destination',
             ])
-            ->add('adresseFacturation', EntityType::class, [
-                'class' => Adresse::class,
-                'choice_label' => function ($adresse) {
-                    return $adresse->getNumero() . ' ' . $adresse->getNom() . ', ' . $adresse->getCodePostal() . ' ' . $adresse->getVille();
-                },
-                'label' => 'Adresse de facturation'
+            ->add('adresseFacturation', AdresseType::class, [
+                'label' => 'Adresse de facturation',
             ])
             ->add('hauteur', IntegerType::class, [
                 'label' => 'Hauteur (en cm)',
@@ -117,10 +104,10 @@ class CommandeFormType extends AbstractType
             ->add('relais', EntityType::class, [
                 'class' => Relais::class,
                 'choices' => $options['relais_choices'],
-                'choice_label' => 'nom',
+                'choice_label' => 'adresseComplete', // Utilise la fonction getAdresseComplete()
                 'mapped' => false,
                 'label' => 'Choix du relais',
-                'placeholder' => 'Sélectionner un relais',
+                'placeholder' => 'Sélectionner l\'adresse d\'un relais',
                 'required' => false,
             ])
             ->add('COMMANDER', SubmitType::class, ['label' => 'ENVOYER']);
@@ -133,4 +120,5 @@ class CommandeFormType extends AbstractType
             'relais_choices' => [],
         ]);
     }
+    
 }

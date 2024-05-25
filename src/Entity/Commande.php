@@ -30,16 +30,16 @@ class Commande
     #[ORM\OneToMany(mappedBy: 'laCommande', targetEntity: Status::class)]
     private Collection $lesStatus;
 
-    #[ORM\ManyToOne(inversedBy: 'lesCommandes')]
+    #[ORM\ManyToOne(inversedBy: 'lesCommandes', cascade: ['persist'])]
     private ?User $leUser = null;
 
-    #[ORM\ManyToOne(inversedBy: 'lesExpeditionsCommandes')]
+    #[ORM\ManyToOne(inversedBy: 'lesExpeditionsCommandes', cascade: ['persist'])]
     private ?Adresse $adresseExpedition = null;
 
-    #[ORM\ManyToOne(inversedBy: 'lesDestinationsCommandes')]
+    #[ORM\ManyToOne(inversedBy: 'lesDestinationsCommandes', cascade: ['persist'])]
     private ?Adresse $adresseDestination = null;
 
-    #[ORM\ManyToOne(inversedBy: 'lesFacturationsCommandes')]
+    #[ORM\ManyToOne(inversedBy: 'lesFacturationsCommandes', cascade: ['persist'])]
     private ?Adresse $adresseFacturation = null;
 
     #[ORM\OneToOne(inversedBy: 'laCommande', cascade: ['persist', 'remove'])]

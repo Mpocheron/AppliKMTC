@@ -19,6 +19,11 @@ body {
   margin: 3vw 3vw;
   
 }
+.marge-navbar {/*marge hauteur navbar*/
+  height: 13vw; 
+}
+
+
 
 /* __________BARRE DE NAVIGATION__________ */
 nav { /*navbar container*/
@@ -237,15 +242,27 @@ nav { /*navbar container*/
  /* .container-register .image-cubes {
   display: none !important;
 } */
-.container-register .image-cubes {
-  display: none;
+.container-register .image-cubes1 {
+  opacity: 0%;
+  height: 150vw;
+  /* display: none; */
 }
   .formulaire-register {
     padding: 2.5vw;
     margin: auto; /* Ajoutez cette ligne */
     max-width: 100%; /* Ajoutez cette ligne */
-    position: relative; /* Ajoutez cette ligne */
-  }}
+    position: absolute; /* Ajoutez cette ligne */
+  }
+  /* .footer-bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 1vw 4.5vw;
+    background: black;
+    z-index: 0;
+    bottom: 0;
+  }  */
+}
 
 
 /* __________BODY__________ */
@@ -440,13 +457,14 @@ nav { /*navbar container*/
 .container-register { /*le container coupé en 2 formulaire/image*/
   width: 100%;
   display: grid;
+  grid-template-columns: 1fr;
   grid-column: 50%;
   position: relative;
   z-index: 0;
 }
 
 .titre-register { /*titre creez votre compte*/
-  font-size: 3.5vw; 
+  font-size: 3vw; 
 }
 
 .formulaire-register {/*coté gauche : formulaire (parent)*/
@@ -456,14 +474,16 @@ nav { /*navbar container*/
   flex-direction: column;
   position : absolute;
   justify-content: center;
+  
+
 }
 
 .legende-register {/*légendes formulaire*/
-  font-size: 1.5vw; 
+  font-size: 1.2vw; 
 }
 .champs-register { /*champs*/
   width: 100%;
-  font-size: 1.5vw; 
+  font-size: 1.2vw; 
   padding: 0.5vw 1.5vw; 
   background: white;
   border-radius: 3vw;
@@ -476,10 +496,79 @@ nav { /*navbar container*/
   color: black;
   background: linear-gradient(#d19c26, #E3CC81);
   font-family: Montserrat, Helvetica, sans-serif;
-  font-size: 2.5vw; 
+  font-size: 2vw; 
   padding: 0.5vw 1.5vw;
   border-radius: 3vw;
-  margin-top: 3vw;
+  margin-top: 2.5vw;
   cursor: pointer; 
 }
 
+.image-cubes1 {/*image cubes à droite*/
+  position: relative;
+  height: 100vw; 
+  margin-left: 50vw;
+}
+
+/* FORMULAIRE COMMANDE */
+
+.formulaire-commande {
+  font-family: Montserrat, Helvetica, sans-serif;
+  background: #444142;
+  color: #d19c26;
+  margin: 3vw 2vw;  
+}
+
+.champs-adresses {/*formulaires adresses dans le formulaire commande*/
+  /* display: grid;*/
+  margin: 3vw 3vw;
+  padding: 3vw 3vw;
+  border-radius: 3vw;
+  border: 0.2vw solid #d19c26; 
+  width : 40vw;
+}
+
+.format-colis {/*formulaires adresses dans le formulaire commande*/
+  /* display: grid;*/
+  margin: 3vw 3vw;
+  padding: 3vw 3vw;
+  border-radius: 3vw;
+  border: 0.2vw solid #d19c26; 
+  width : 40vw;
+}
+
+.identite-destinataire {
+flex-direction: column;
+margin: 3vw 3vw;
+padding: 3vw 3vw;
+width: 75vw;
+} 
+
+.champs-identite-destinataire {/*formulaires adresses dans le formulaire commande*/
+  /* display: grid;*/
+  margin: 1vw 1vw;
+  padding: 1vw 1vw;
+  border-radius: 3vw;
+  border: 0.2vw solid #d19c26; 
+  width : 40vw;
+}
+
+.choix-destinaton {
+  /* display: grid;*/
+  margin: 3vw 3vw;
+  padding: 1vw 1vw;
+  border-radius: 3vw;
+  border: 0.2vw solid #d19c26; 
+  width : 40vw;
+}
+
+.titre-choix-destination {
+  /* display: grid;*/
+  margin: 3vw 3vw;
+  padding: 1vw 1vw;
+  border-radius: 3vw;
+  /* border: 0.2vw solid #d19c26;  */
+  width : 40vw;
+  border: 0.2vw solid black;
+  color: black;
+  background: linear-gradient(#d19c26, #E3CC81);
+}

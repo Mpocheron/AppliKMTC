@@ -1,0 +1,37 @@
+{# templates/commande/recap.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="body-sans-base"> 
+    <br><br><br><br><br><br><br>
+    <h1>Récapitulatif Commande</h1>
+    <dl>
+        <dt>Nom de l'utilisateur :</dt>
+        <dd>{{ app.user.nom }}</dd>
+        <dt>Prénom de l'utilisateur :</dt>
+        <dd>{{ app.user.prenom }}</dd>
+        <dt>Téléphone de l'utilisateur :</dt>
+        <dd>{{ app.user.telephone }}</dd>
+
+        <dt>Adresse de facturation :</dt>
+        <dd>{{ commande.adresseFacturation.numero }} {{ commande.adresseFacturation.nom }}, {{ commande.adresseFacturation.codePostal }} {{ commande.adresseFacturation.ville }}</dd>
+
+        <dt>Hauteur du colis :</dt>
+        <dd>{{ commande.hauteur }} cm</dd>
+        <dt>Largeur du colis :</dt>
+        <dd>{{ commande.largeur }} cm</dd>
+        <dt>Longueur du colis :</dt>
+        <dd>{{ commande.longueur }} cm</dd>
+        <dt>Poids du colis :</dt>
+        <dd>{{ commande.poids }} kg</dd>
+
+        <dt>Nom du destinataire :</dt>
+        <dd>{{ commande.nomDestinataire }}</dd>
+        <dt>Prénom du destinataire :</dt>
+        <dd>{{ commande.prenomDestinataire }}</dd>
+
+        <dt>Relais sélectionné :</dt>
+        <dd>{{ commande.relais ? commande.relais.nom : 'Aucun relais sélectionné' }}</dd>
+    </dl>
+</div>
+{% endblock %}
