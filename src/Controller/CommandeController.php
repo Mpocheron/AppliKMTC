@@ -19,44 +19,48 @@ class CommandeController extends AbstractController
     public function createCommande(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         // Obtenir l'utilisateur connecté
-        $user = $this->getUser(); 
-        
+        $user = $this->getUser();
+
         // Créer une nouvelle instance de Commande
         $commande = new Commande();
         $commande->setLeUser($user); // Associer l'utilisateur connecté à la commande
 
         // Créer le formulaire avec l'instance de Commande
         $commandeform = $this->createForm(CommandeType::class, $commande, [
-            'relais_choices' => $entityManager->getRepository(Relais::class)->findAll()
+            'relais_choices' => $entityManager->getRepository(Relais::class)->findAll(),
+            'is_relais_selected' => false, // Par défaut
         ]);
         $commandeform->handleRequest($request);
 
         // Vérifiez si le formulaire est soumis et valide
         if ($commandeform->isSubmitted() && $commandeform->isValid()) {
-            // Vérification si un relais est choisi comme adresse d'expédition
-            if ($commande->getAdresseExpedition() instanceof Relais) {
-                // Si un relais est choisi, on supprime l'adresse de destination de la commande
+            // Vérification si un relais est choisi
+            $relais = $commandeform->get('relais')->getData();
+            if ($relais) {
+                // Si un relais est choisi, supprimer l'adresse de destination
                 $commande->setAdresseDestination(null);
+            } else {
+                // Récupérer les adresses et les assigner à la commande
+                $adresseExpedition = $commandeform->get('adresseExpedition')->getData();
+                $adresseDestination = $commandeform->get('adresseDestination')->getData();
+                $adresseFacturation = $commandeform->get('adresseFacturation')->getData();
+
+                $commande->setAdresseExpedition($adresseExpedition);
+                $commande->setAdresseDestination($adresseDestination);
+                $commande->setAdresseFacturation($adresseFacturation);
             }
-
-            // Récupérer les adresses et les assigner à la commande
-            $adresseExpedition = $commandeform->get('adresseExpedition')->getData();
-            $adresseDestination = $commandeform->get('adresseDestination')->getData();
-            $adresseFacturation = $commandeform->get('adresseFacturation')->getData();
-
-            $commande->setAdresseExpedition($adresseExpedition);
-            $commande->setAdresseDestination($adresseDestination);
-            $commande->setAdresseFacturation($adresseFacturation);
 
             // Sauvegarder les données de commande
             $entityManager->persist($commande);
-            $entityManager->flush();  
+            $entityManager->flush();
 
             // Ajouter un message flash de succès
             $this->addFlash('success', 'La commande a été validée avec succès.');
 
-            // Redirection vers la page récapitulatif de commande
+            // Redirection vers la page de succès
+            // return $this->redirectToRoute('app_commande_success');
             return $this->redirectToRoute('app_commande_recap', ['id' => $commande->getId()]);
+
         } else {
             // Ajouter un message flash d'erreur
             $this->addFlash('error', 'Une erreur est survenue lors de la validation de la commande.');

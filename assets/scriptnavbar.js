@@ -31,3 +31,50 @@ new ResizeObserver(entries => {
     navLinksContainer.style.transition = "none";
   }
 }).observe(document.body)
+
+// document.addEventListener('DOMContentLoaded', function () {
+//   const relaisField = document.getElementById('relais');
+//   const adresseDestinationField = document.getElementById('adresse-destination');
+
+//   function toggleDestinationField() {
+//       if (relaisField.value) {
+//           adresseDestinationField.style.display = 'none';
+//       } else {
+//           adresseDestinationField.style.display = 'block';
+//       }
+//   }
+
+//   relaisField.addEventListener('change', toggleDestinationField);
+//   toggleDestinationField(); // Initial call
+// });
+// document.addEventListener('DOMContentLoaded', function () {
+//         const relaisField = document.querySelector('[name="commande[relais]"]');
+//         const adresseDestinationField = document.querySelector('.choix-destination');
+
+//         function toggleAdresseDestination() {
+//             if (relaisField.value) {
+//                 adresseDestinationField.style.display = 'none';
+//             } else {
+//                 adresseDestinationField.style.display = 'block';
+//             }
+//         }
+
+//         relaisField.addEventListener('change', toggleAdresseDestination);
+//         toggleAdresseDestination(); // Appeler une fois au chargement pour cacher si nécessaire
+    // });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const relaisField = document.querySelector('[name="commande[relais]"]');
+      const adresseDestinationField = document.querySelector('.choix-destination');
+
+      function toggleAdresseDestination() {
+          if (relaisField.value) {
+              adresseDestinationField.style.display = 'none';
+          } else {
+              adresseDestinationField.style.display = 'block';
+          }
+      }
+
+      relaisField.addEventListener('change', toggleAdresseDestination);
+      toggleAdresseDestination(); // Appeler une fois au chargement pour cacher si nécessaire
+  });

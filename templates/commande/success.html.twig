@@ -3,6 +3,8 @@
 {% block title %}Commande{% endblock %}
 
 {% block content %}
+<p class="marge-navbar"> </p>
+<span class="marge-navbar"> </span>
 <span class="marge-navbar"> </span>
     <h1>Résultat de la commande</h1>
 
@@ -10,7 +12,89 @@
     {% if message %}
         <div class="alert alert-success">{{ message }}</div>
         <p>Récapitulatif de la commande :</p>
-<a href="{{ path('app_commande_recap', {'id': commande.id}) }}">Voir le récapitulatif de la commande</a>
+
+
+<p>Commande numéro : {{ commande.id }}</p>
+
+<h2>Expéditeur :</h2>
+<p>
+    {{ commande.adresseExpedition.numero }} {{ commande.adresseExpedition.nom }}<br>
+    {{ commande.adresseExpedition.codePostal }} {{ commande.adresseExpedition.ville }}
+</p>
+
+{# <h2>Destinataire :</h2>
+    {% if commande.adresseDestination is not null %}
+        <p>{{ commande.adresseDestination.numero }} {{ commande.adresseDestination.nom }}<br>
+        {{ commande.adresseDestination.rue }}<br>
+        {{ commande.adresseDestination.codePostal }} {{ commande.adresseDestination.ville }}</p>
+    {% else %}
+        <p>Aucune adresse de destination spécifiée.</p> 
+    {% endif %} #}
+
+    <h2>Destinataire :</h2>
+    {% if commande.adresseDestination is not null %}
+        <p>{{ commande.adresseDestination.numero }} {{ commande.adresseDestination.nom }}<br>
+        {{ commande.adresseDestination.rue }}<br>
+        {{ commande.adresseDestination.codePostal }} {{ commande.adresseDestination.ville }}</p>
+    {% else %}
+        {% if commande.relais is not null %}
+            <p>ID Relais : {{ commande.relais.id }}</p>
+            <p>Adresse du relais : {{ commande.relais.adresseComplete }}</p>
+        {% else %}
+            <p>Aucune destination spécifiée.</p>
+        {% endif %}
+    {% endif %}
+
+{# {% if commande.adresseDestination is not null %}
+        <h2>Destinataire :</h2>
+        <p>{{ commande.adresseDestination.numero }} {{ commande.adresseDestination.nom }}<br>
+           {{ commande.adresseDestination.rue }}<br>
+           {{ commande.adresseDestination.codePostal }} {{ commande.adresseDestination.ville }}</p>
+    {% else %}
+        {% if commande.relais is not null %}
+            <h2>Relais :</h2>
+            <p>{{ commande.relais.nom }}<br>
+               {{ commande.relais.adresseComplete }}</p>
+        {% else %}
+            <p>Aucune destination spécifiée</p>
+        {% endif %}
+    {% endif %} #}
+<h2>Adresse de facturation :</h2>
+<p>
+    {{ commande.adresseFacturation.numero }} {{ commande.adresseFacturation.nom }}<br>
+    {{ commande.adresseFacturation.codePostal }} {{ commande.adresseFacturation.ville }}
+</p>
+
+<h2>Détails de la commande :</h2>
+<p>Hauteur : {{ commande.hauteur }} cm</p>
+<p>Largeur : {{ commande.largeur }} cm</p>
+<p>Longueur : {{ commande.longueur }} cm</p>
+<p>Poids : {{ commande.poids }} kg</p>
+
+<h2>Destinataire :</h2>
+<p>
+    Nom : {{ commande.nomDestinataire }}<br>
+    Prénom : {{ commande.prenomDestinataire }}
+</p>
+
+<a href="{{ path('app_commande') }}">Retour à la page de commande</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{# <a href="{{ path('app_commande_recap', {'id': commande.id}) }}">Voir le récapitulatif de la commande</a> #}
         
         <a href="{{ path('home') }}">Retour à l'accueil</a>
     {% endif %}

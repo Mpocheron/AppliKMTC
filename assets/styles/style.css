@@ -572,3 +572,15 @@ width: 75vw;
   color: black;
   background: linear-gradient(#d19c26, #E3CC81);
 }
+
+/* PAGE RECAP COMMANDE */
+
+.page-recap {
+  margin: 3vw 3vw;
+}
+
+.commande-reussie {
+  color: #E3CC81;
+  font-size: 2vw;
+  font-style: italic;
+}

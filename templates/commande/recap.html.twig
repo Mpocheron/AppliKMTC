@@ -4,7 +4,9 @@
 
 {% block content %}
 <p class="marge-navbar"> </p>
-
+<div class="page-recap">
+<p class="commande-reussie">Commande réussie !</p>
+<br>
 <h1>Récapitulatif de la commande</h1>
 
 <p>Commande numéro : {{ commande.id }}</p>
@@ -15,12 +17,46 @@
     {{ commande.adresseExpedition.codePostal }} {{ commande.adresseExpedition.ville }}
 </p>
 
+{# <h2>Destinataire :</h2>
+    {% if commande.adresseDestination is not null %}
+        <p>{{ commande.adresseDestination.numero }} {{ commande.adresseDestination.nom }}<br>
+        {{ commande.adresseDestination.rue }}<br>
+        {{ commande.adresseDestination.codePostal }} {{ commande.adresseDestination.ville }}</p>
+    {% else %}
+        <p>Aucune adresse de destination spécifiée.</p> 
+    {% endif %} #}
 <h2>Destinataire :</h2>
 <p>
-    {{ commande.adresseDestination.numero }} {{ commande.adresseDestination.nom }}<br>
-    {{ commande.adresseDestination.codePostal }} {{ commande.adresseDestination.ville }}
+    Nom : {{ commande.nomDestinataire }}<br>
+    Prénom : {{ commande.prenomDestinataire }}
 </p>
+    <h2>Destination :</h2>
+    {% if commande.adresseDestination is not null %}
+        <p>{{ commande.adresseDestination.numero }} {{ commande.adresseDestination.nom }}<br>
+        {{ commande.adresseDestination.codePostal }} {{ commande.adresseDestination.ville }}</p>
+    {% else %}
+        {% if commande.relais is not null %}
+            <p>ID Relais : {{ commande.relais.id }}</p>
+            <p>Adresse du relais : {{ commande.relais.adresseComplete }}</p>
+        {% else %}
+            <p>Aucune destination spécifiée.</p>
+        {% endif %}
+    {% endif %}
 
+{# {% if commande.adresseDestination is not null %}
+        <h2>Destinataire :</h2>
+        <p>{{ commande.adresseDestination.numero }} {{ commande.adresseDestination.nom }}<br>
+           {{ commande.adresseDestination.rue }}<br>
+           {{ commande.adresseDestination.codePostal }} {{ commande.adresseDestination.ville }}</p>
+    {% else %}
+        {% if commande.relais is not null %}
+            <h2>Relais :</h2>
+            <p>{{ commande.relais.nom }}<br>
+               {{ commande.relais.adresseComplete }}</p>
+        {% else %}
+            <p>Aucune destination spécifiée</p>
+        {% endif %}
+    {% endif %} #}
 <h2>Adresse de facturation :</h2>
 <p>
     {{ commande.adresseFacturation.numero }} {{ commande.adresseFacturation.nom }}<br>
@@ -33,11 +69,8 @@
 <p>Longueur : {{ commande.longueur }} cm</p>
 <p>Poids : {{ commande.poids }} kg</p>
 
-<h2>Destinataire :</h2>
-<p>
-    Nom : {{ commande.nomDestinataire }}<br>
-    Prénom : {{ commande.prenomDestinataire }}
-</p>
 
-<a href="{{ path('app_commande') }}">Retour à la page de commande</a>
+
+{# <a href="{{ path('app_commande') }}">Retour à la page de commande</a> #}
+</div>
 {% endblock %}

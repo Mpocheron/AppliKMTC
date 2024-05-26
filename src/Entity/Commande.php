@@ -54,6 +54,10 @@ class Commande
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $prenomDestinataire = null;
 
+    #[ORM\ManyToOne(targetEntity: Relais::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Relais $relais = null;
+
     public function __construct()
     {
         $this->lesStatus = new ArrayCollection();
@@ -72,7 +76,6 @@ class Commande
     public function setHauteur(int $hauteur): static
     {
         $this->hauteur = $hauteur;
-
         return $this;
     }
 
@@ -84,7 +87,6 @@ class Commande
     public function setLargeur(int $largeur): static
     {
         $this->largeur = $largeur;
-
         return $this;
     }
 
@@ -96,7 +98,6 @@ class Commande
     public function setLongueur(int $longueur): static
     {
         $this->longueur = $longueur;
-
         return $this;
     }
 
@@ -108,13 +109,9 @@ class Commande
     public function setPoids(int $poids): static
     {
         $this->poids = $poids;
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, Status>
-     */
     public function getLesStatus(): Collection
     {
         return $this->lesStatus;
@@ -126,19 +123,16 @@ class Commande
             $this->lesStatus->add($lesStatus);
             $lesStatus->setLaCommande($this);
         }
-
         return $this;
     }
 
     public function removeLesStatus(Status $lesStatus): static
     {
         if ($this->lesStatus->removeElement($lesStatus)) {
-            // set the owning side to null (unless already changed)
             if ($lesStatus->getLaCommande() === $this) {
                 $lesStatus->setLaCommande(null);
             }
         }
-
         return $this;
     }
 
@@ -150,7 +144,6 @@ class Commande
     public function setLeUser(?User $leUser): static
     {
         $this->leUser = $leUser;
-
         return $this;
     }
 
@@ -162,7 +155,6 @@ class Commande
     public function setAdresseExpedition(?Adresse $adresseExpedition): static
     {
         $this->adresseExpedition = $adresseExpedition;
-
         return $this;
     }
 
@@ -174,7 +166,6 @@ class Commande
     public function setAdresseDestination(?Adresse $adresseDestination): static
     {
         $this->adresseDestination = $adresseDestination;
-
         return $this;
     }
 
@@ -186,7 +177,6 @@ class Commande
     public function setAdresseFacturation(?Adresse $adresseFacturation): static
     {
         $this->adresseFacturation = $adresseFacturation;
-
         return $this;
     }
 
@@ -198,7 +188,6 @@ class Commande
     public function setLeCasier(?Casier $leCasier): static
     {
         $this->leCasier = $leCasier;
-
         return $this;
     }
 
@@ -210,7 +199,6 @@ class Commande
     public function setNombreColis(int $NombreColis): static
     {
         $this->NombreColis = $NombreColis;
-
         return $this;
     }
 
@@ -222,7 +210,6 @@ class Commande
     public function setNomDestinataire(?string $nomDestinataire): static
     {
         $this->nomDestinataire = $nomDestinataire;
-
         return $this;
     }
 
@@ -234,7 +221,17 @@ class Commande
     public function setPrenomDestinataire(?string $prenomDestinataire): static
     {
         $this->prenomDestinataire = $prenomDestinataire;
+        return $this;
+    }
 
+    public function getRelais(): ?Relais
+    {
+        return $this->relais;
+    }
+
+    public function setRelais(?Relais $relais): static
+    {
+        $this->relais = $relais;
         return $this;
     }
 }

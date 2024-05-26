@@ -12,6 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Relais;
+use App\Entity\Adresse;
 
 class CommandeType extends AbstractType
 {
@@ -20,12 +21,25 @@ class CommandeType extends AbstractType
         $builder
             ->add('adresseExpedition', AdresseType::class, [
                 'label' => 'Adresse d\'expédition',
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Veuillez choisir une adresse d\'expédition.'])
+                ],
             ])
             ->add('adresseDestination', AdresseType::class, [
                 'label' => 'Adresse de destination',
+                'required' => false,
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Adresse de destination obligatoire',
+                        'groups' => ['adresse_required'],
+                    ]),
+                ],
             ])
             ->add('adresseFacturation', AdresseType::class, [
                 'label' => 'Adresse de facturation',
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Veuillez fournir une adresse de facturation.'])
+                ],
             ])
             ->add('hauteur', IntegerType::class, [
                 'label' => 'Hauteur (en cm)',
@@ -65,51 +79,35 @@ class CommandeType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Assert\Range([
-                        'min' => 0,
-                        'max' => 15,
+                        'min' => 1,
+                        'max' => 40,
                         'notInRangeMessage' => 'Le poids doit être entre {{ min }} et {{ max }} kg.',
                     ]),
                 ],
             ])
+            
             ->add('nomDestinataire', TextType::class, [
-                'label' => 'Nom',
-                'required' => true,
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Le nom du destinataire ne peut pas être vide.']),
-                    new Assert\Length([
-                        'max' => 30,
-                        'maxMessage' => 'Le nom ne doit pas dépasser {{ limit }} caractères.',
-                    ]),
-                    new Assert\Regex([
-                        'pattern' => '/^[a-zA-Z]+$/',
-                        'message' => 'Le nom ne doit contenir que des lettres sans espace.',
-                    ]),
-                ],
+                'label' => 'Nom du destinataire',
+                'required' => false,
             ])
             ->add('prenomDestinataire', TextType::class, [
-                'label' => 'Prénom',
-                'required' => true,
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Le prénom du destinataire ne peut pas être vide.']),
-                    new Assert\Length([
-                        'max' => 30,
-                        'maxMessage' => 'Le prénom ne doit pas dépasser {{ limit }} caractères.',
-                    ]),
-                    new Assert\Regex([
-                        'pattern' => '/^[a-zA-Z]+$/',
-                        'message' => 'Le prénom ne doit contenir que des lettres sans espace.',
-                    ]),
-                ],
+                'label' => 'Prénom du destinataire',
+                'required' => false,
             ])
             ->add('relais', EntityType::class, [
                 'class' => Relais::class,
-                'choices' => $options['relais_choices'],
-                'choice_label' => 'adresseComplete', // Utilise la fonction getAdresseComplete()
-                'mapped' => false,
-                'label' => 'Choix du relais',
-                'placeholder' => 'Sélectionner l\'adresse d\'un relais',
+                'choice_label' => 'nom',
+                'label' => 'Relais',
+                'placeholder' => 'Sélectionnez un relais',
                 'required' => false,
+                'choices' => $options['relais_choices'], // Utiliser l'option définie
+                'attr' => [
+                    'data-is-relais-selected' => $options['is_relais_selected'] // Utiliser l'option définie
+                ],
             ])
+            // ->add('submit', SubmitType::class, [
+            //     'label' => 'Valider la commande'
+            //])
             ->add('COMMANDER', SubmitType::class, ['label' => 'ENVOYER']);
     }
 
@@ -117,8 +115,8 @@ class CommandeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Commande::class,
-            'relais_choices' => [],
+            'relais_choices' => [], // Définir une valeur par défaut
+            'is_relais_selected' => false, // Définir une valeur par défaut
         ]);
     }
-    
 }
