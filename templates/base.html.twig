@@ -46,8 +46,10 @@
             <img src="{{ asset('img/account_connected.png') }}" class="user-toggler img" alt="user-icon">
         </a>
         <div class="sign-btns">
-        <button type="button" onclick="window.location.href='profil'">Mon profil</button>
-            <button type="button" onclick="window.location.href='logout'">Déconnexion</button>
+        {# <button type="button" onclick="window.location.href='/profil'">Mon profil</button>
+            <button type="button" onclick="window.location.href='/logout'">Déconnexion</button> #}
+        <button type="button" onclick="location.assign('/profil')">Mon profil</button>
+    <button type="button" onclick="location.assign('/logout')">Déconnexion</button>
         </div>
         <a href="/logout" class="user-toggler" aria-label="Se déconnecter">
             <img src="{{ asset('img/se-deconnecter2.png') }}" alt="logout-icon">
