@@ -31,6 +31,10 @@
         <p><label class="legende-register" for="registrationForm_telephone">Téléphone</label></p>
         <p>{{ form_widget(registrationForm.telephone, {'attr': {'class': 'champs-register', 'id': 'registrationForm_telephone'}}) }}</p>
 
+
+        <h5>Votre adresse</h5>
+        {{ form_widget(registrationForm.adresseUser, {'attr': {'class': 'champs-adresses'}}) }}
+
         <p>{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input', 'id': 'registrationForm_agreeTerms'}}) }}</p>
     
     <button class="btn-creer" type="submit">Créer</button></div>

@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-
 <p class="marge-navbar"> </p>
 <div class="formulaire-commande">
     <h1>COMMANDE</h1>
@@ -19,10 +18,16 @@
         <tr>
             <td>
                 <h5>Adresse de Facturation</h5>
+                <label>
+                    {# <input type="checkbox" id="useUserBillingAddress"> Utiliser mon adresse utilisateur #}
+                </label>
                 {{ form_widget(commandeform.adresseFacturation, {'attr': {'class': 'champs-adresses'}}) }}
             </td>
             <td>
                 <h5>Adresse d'expédition</h5>
+                <label>
+                    {# <input type="checkbox" id="useUserShippingAddress"> Utiliser mon adresse utilisateur #}
+                </label>
                 {{ form_widget(commandeform.adresseExpedition, {'attr': {'class': 'champs-adresses'}}) }}
             </td>
         </tr>
@@ -74,7 +79,5 @@
         </div>
     </div>
 </div>
-
-
 
 {% endblock %}

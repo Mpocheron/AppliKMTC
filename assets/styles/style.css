@@ -468,7 +468,7 @@ nav { /*navbar container*/
 }
 
 .formulaire-register {/*coté gauche : formulaire (parent)*/
-  padding: 2.5vw;
+  padding: 1.5vw;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -499,7 +499,7 @@ nav { /*navbar container*/
   font-size: 2vw; 
   padding: 0.5vw 1.5vw;
   border-radius: 3vw;
-  margin-top: 2.5vw;
+  margin-top: 1.5vw;
   cursor: pointer; 
 }
 
@@ -515,13 +515,13 @@ nav { /*navbar container*/
   font-family: Montserrat, Helvetica, sans-serif;
   background: #444142;
   color: #d19c26;
-  margin: 3vw 2vw;  
+  margin: 2vw 2vw;  
 }
 
 .champs-adresses {/*formulaires adresses dans le formulaire commande*/
   /* display: grid;*/
-  margin: 3vw 3vw;
-  padding: 3vw 3vw;
+  margin: 2vw 3vw;
+  padding: 2vw 3vw;
   border-radius: 3vw;
   border: 0.2vw solid #d19c26; 
   width : 40vw;

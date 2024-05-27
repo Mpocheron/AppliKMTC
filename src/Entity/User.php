@@ -49,6 +49,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 10)]
     private ?string $telephone = null;
 
+    #[ORM\OneToOne(targetEntity: Adresse::class, cascade: ['persist', 'remove'])]
+    private ?Adresse $adresseUser = null;
+
     public function __construct()
     {
         $this->lesAdresseUsers = new ArrayCollection();
@@ -72,38 +75,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
-
         return array_unique($roles);
     }
 
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
-
         return $this;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
     public function getPassword(): string
     {
         return $this->password;
@@ -112,22 +101,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): static
     {
         $this->password = $password;
-
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        // Effacer les données temporaires sensibles
     }
 
-    /**
-     * @return Collection<int, AdresseUser>
-     */
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): static
+    {
+        $this->prenom = $prenom;
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): static
+    {
+        $this->telephone = $telephone;
+        return $this;
+    }
+
+    public function getLePreferences(): ?Preferences
+    {
+        return $this->lePreferences;
+    }
+
+    public function setLePreferences(?Preferences $lePreferences): static
+    {
+        if ($lePreferences === null && $this->lePreferences !== null) {
+            $this->lePreferences->setLeUser(null);
+        }
+
+        if ($lePreferences !== null && $lePreferences->getLeUser() !== $this) {
+            $lePreferences->setLeUser($this);
+        }
+
+        $this->lePreferences = $lePreferences;
+        return $this;
+    }
+
     public function getLesAdresseUsers(): Collection
     {
         return $this->lesAdresseUsers;
@@ -146,7 +179,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeLesAdresseUser(AdresseUser $lesAdresseUser): static
     {
         if ($this->lesAdresseUsers->removeElement($lesAdresseUser)) {
-            // set the owning side to null (unless already changed)
             if ($lesAdresseUser->getLeuser() === $this) {
                 $lesAdresseUser->setLeuser(null);
             }
@@ -155,31 +187,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getLePreferences(): ?Preferences
-    {
-        return $this->lePreferences;
-    }
-
-    public function setLePreferences(?Preferences $lePreferences): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($lePreferences === null && $this->lePreferences !== null) {
-            $this->lePreferences->setLeUser(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($lePreferences !== null && $lePreferences->getLeUser() !== $this) {
-            $lePreferences->setLeUser($this);
-        }
-
-        $this->lePreferences = $lePreferences;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Commande>
-     */
     public function getLesCommandes(): Collection
     {
         return $this->lesCommandes;
@@ -198,7 +205,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeLesCommande(Commande $lesCommande): static
     {
         if ($this->lesCommandes->removeElement($lesCommande)) {
-            // set the owning side to null (unless already changed)
             if ($lesCommande->getLeUser() === $this) {
                 $lesCommande->setLeUser(null);
             }
@@ -207,55 +213,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getNom(): ?string
+    public function getAdresseUser(): ?Adresse
     {
-        return $this->nom;
+        return $this->adresseUser;
     }
 
-    public function setNom(string $nom): static
+    public function setAdresseUser(?Adresse $adresseUser): static
     {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): static
-    {
-        $this->prenom = $prenom;
-
-        return $this;
-    }
-
-    public function getTelephone(): ?string
-    {
-        return $this->telephone;
-    }
-
-    public function setTelephone(string $telephone): static
-    {
-        $this->telephone = $telephone;
-
-        return $this;
-    }
-
-    /**
-     * Ajoute un rôle à un utilisateur
-     * 
-     * @param Array|String $newRoles Le ou les rôles à ajouter
-     */
-    public function addRole(Array|string $newRoles): static
-    {
-        if(is_string($newRoles)) {
-            $this->roles[] = $newRoles;
-        }
-        else {
-            $this->roles = array_merge($this->roles, $newRoles);
-        }
+        $this->adresseUser = $adresseUser;
         return $this;
     }
 }

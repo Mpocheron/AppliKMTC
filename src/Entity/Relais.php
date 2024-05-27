@@ -87,41 +87,36 @@ class Relais
 
         return $this;
     }
+
     public function denombrerCasier(): int
     {
         // Initialise le nombre de casiers à zéro
         $nombreCasiers = 0;
         
-        // Initialise l'adresse du relais
-        $adresse = '';
-        
         // Parcours tous les casiers associés à ce relais
         foreach ($this->lesCasiers as $casier) {
-                // Incrémente le nombre de casiers
-                $nombreCasiers++;
+            // Incrémente le nombre de casiers
+            $nombreCasiers++;
         }
 
-               
-            // Retourne les informations sous forme de tableau associatif
-            return $nombreCasiers;
-        }
+        // Retourne les informations sous forme de tableau associatif
+        return $nombreCasiers;
+    }
 
     public function getAdresseComplete(): string
-{
-    // Vérifie si l'adresse existe
-    if ($this->leAdresse) {
-        // Construit l'adresse complète
-        return sprintf(
-            '%s %s, %s %s',
-            $this->leAdresse->getNumero(),
-            $this->leAdresse->getNom(),
-            $this->leAdresse->getCodePostal(),
-            $this->leAdresse->getVille()
-        );
+    {
+        // Vérifie si l'adresse existe
+        if ($this->leAdresse) {
+            // Construit l'adresse complète
+            return sprintf(
+                '%s %s, %s %s',
+                $this->leAdresse->getNumero(),
+                $this->leAdresse->getNom(),
+                $this->leAdresse->getCodePostal(),
+                $this->leAdresse->getVille()
+            );
+        }
+        
+        return 'Adresse non disponible';
     }
-    
-    return 'Adresse non disponible';
-}
-
-
 }

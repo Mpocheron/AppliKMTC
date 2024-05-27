@@ -15,6 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use App\Entity\AdresseUser;
 
 class RegistrationFormType extends AbstractType
 {
@@ -52,6 +53,12 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ]
             ])
+            ->add('adresseUser', AdresseType::class, [
+                'label' => 'Votre adresse',
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez nous indiquer votre adresse.'])
+                ],
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'label' => 'J\'accepte les conditions générales d\'utilisation',
@@ -71,7 +78,6 @@ class RegistrationFormType extends AbstractType
                     new Length([
                         'min' => 8,
                         'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères.',
-                        // Longueur maximale autorisée par Symfony pour des raisons de sécurité
                         'max' => 4096,
                     ]),
                 ],
