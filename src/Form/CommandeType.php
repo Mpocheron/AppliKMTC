@@ -94,17 +94,26 @@ class CommandeType extends AbstractType
                 'label' => 'Prénom du destinataire',
                 'required' => false,
             ])
-            ->add('relais', EntityType::class, [
+             ->add('relais', EntityType::class, [
                 'class' => Relais::class,
-                'choice_label' => 'nom',
-                'label' => 'Relais',
-                'placeholder' => 'Sélectionnez un relais',
-                'required' => false,
-                'choices' => $options['relais_choices'], // Utiliser l'option définie
-                'attr' => [
-                    'data-is-relais-selected' => $options['is_relais_selected'] // Utiliser l'option définie
-                ],
-            ])
+                 'choice_label' => 'adresseComplete', // Utilise la fonction getAdresseComplete()
+                 'label' => 'Relais',
+                 'placeholder' => 'Sélectionnez un relais',
+                 'required' => false,
+                 'choices' => $options['relais_choices'], // Utiliser l'option définie
+                 'attr' => [
+                 'data-is-relais-selected' => $options['is_relais_selected'] // Utiliser l'option définie
+                 ],])
+            // ->add('relaisAdresse', EntityType::class, [
+            //     'class' => Relais::class,
+            //     'choices' => $options['relais_choices'],
+            //     'choice_label' => 'adresseComplete', // Utilise la fonction getAdresseComplete()
+            //     'mapped' => false,
+            //     'label' => 'Choix du relais',
+            //     'placeholder' => 'Sélectionner l\'adresse d\'un relais',
+            //     'required' => false,
+            // ])
+            
             // ->add('submit', SubmitType::class, [
             //     'label' => 'Valider la commande'
             //])
