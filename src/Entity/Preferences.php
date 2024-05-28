@@ -25,8 +25,8 @@ class Preferences
     #[ORM\OneToOne(inversedBy: 'lePreferences', cascade: ['persist', 'remove'])]
     private ?User $leUser = null;
 
-    #[ORM\ManyToOne]
-    private ?Relais $leRelais = null;
+    // #[ORM\ManyToOne]
+    // private ?Relais $leRelais = null;
 
     public function getId(): ?int
     {
@@ -81,15 +81,15 @@ class Preferences
         return $this;
     }
 
-    public function getLeRelais(): ?Relais
-    {
-        return $this->leRelais;
-    }
+    // public function getLeRelais(): ?Relais
+    // {
+    //     return $this->leRelais;
+    // }
 
-    public function setLeRelais(?Relais $leRelais): static
-    {
-        $this->leRelais = $leRelais;
+    // public function setLeRelais(?Relais $leRelais): static
+    // {
+    //     $this->leRelais = $leRelais;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }

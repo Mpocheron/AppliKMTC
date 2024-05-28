@@ -13,6 +13,8 @@ body {
 
 .body-sans-base {
   position: absolute;
+  height: 100%;
+  width: 100%;
   font-family: Montserrat, Helvetica, sans-serif;
   background: #444142;
   color: #d19c26;

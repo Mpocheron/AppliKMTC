@@ -58,10 +58,8 @@ class Commande
     #[ORM\JoinColumn(nullable: true)]
     private ?Relais $relais = null;
 
-    public function __construct()
-    {
-        $this->lesStatus = new ArrayCollection();
-    }
+    #[ORM\Column(type: 'datetime_immutable')]
+    private \DateTimeImmutable $createdAt;
 
     public function getId(): ?int
     {
@@ -233,5 +231,16 @@ class Commande
     {
         $this->relais = $relais;
         return $this;
+    }
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable(); // Initialise la date de création
+        $this->lesStatus = new ArrayCollection();
+    }
+
+    public function getCreatedAt(): \DateTimeImmutable
+    {
+        return $this->createdAt;
     }
 }

@@ -12,6 +12,8 @@ use App\Form\CommandeType;
 use App\Entity\Commande;
 use App\Entity\Relais;
 use App\Entity\Adresse;
+use App\Repository\CommandeRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class CommandeController extends AbstractController
 {
@@ -93,6 +95,15 @@ class CommandeController extends AbstractController
 
         return $this->render('commande/recap.html.twig', [
             'commande' => $commande,
+        ]);
+    }
+    #[Route('/historique', name: 'commande_historique')]
+    public function historique(CommandeRepository $commandeRepository, UserInterface $user): Response
+    {
+        $commandes = $commandeRepository->findBy(['leUser' => $user]);
+
+        return $this->render('commande/historique.html.twig', [
+            'commandes' => $commandes,
         ]);
     }
 }

@@ -1,0 +1,51 @@
+{# templates/commande/historique.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<p class="marge-navbar"> </p>
+
+<span class="marge-navbar"> </span>
+<span class="marge-navbar"> </span>
+    <h1>Historique des Commandes</h1>
+
+    {% if commandes is not empty %}
+    <div class="container-contact">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="td-contact">N° de commande</th>
+                    <th class="td-contact">Destinataire</th>
+                    <th class="td-contact">Destination</th>
+                    <th class="td-contact">Dimensions du colis (HxLxl)</th>
+                    <th class="td-contact">Poids du colis</th>
+                    <th class="td-contact">Date de Commande</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for commande in commandes %}
+                    <tr>
+                        <td class="td-contact">{{ commande.id }}</td>
+                        <td class="td-contact">{{ commande.nomDestinataire }} {{ commande.prenomDestinataire }} </td>
+                        <td class="td-contact">
+                            {% if commande.adresseDestination %}
+                                {{ commande.adresseDestination.numero }} {{ commande.adresseDestination.nom }}<br>
+        {{ commande.adresseDestination.codePostal }} {{ commande.adresseDestination.ville }}
+                            {% else %}
+                            Relais N° {{ commande.relais.id }} - {{ commande.relais.adresseComplete }}
+                            {% endif %} 
+                        </td>
+                        <td class="td-contact">{{ commande.hauteur }} x {{ commande.longueur }} x {{ commande.largeur }}</td>
+                        <td class="td-contact">{{ commande.poids }} kg</td>
+                        <td class="td-contact">{{ commande.createdAt|date('d/m/Y H:i') }}</td>
+                    </tr>
+                   
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p>Aucune commande passée.</p>
+        <br><br><br><br><br><br><br><br><br><br><br><br>
+    {% endif %}
+    
+{% endblock %}
