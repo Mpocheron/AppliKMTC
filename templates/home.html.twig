@@ -9,7 +9,7 @@
             <span class="button-container">
 {% if app.user %}
   <button class="send-button" onclick="window.location.href='createCommande'">Envoyez un colis</button>
-  <button class="track-button" onclick="window.location.href='/user/suivi/{id}'">Suivez votre expédition</button>
+  <button class="track-button" onclick="window.location.href='{{ path('commande_historique') }}'">Suivez votre expédition</button>
   {% else %}
 <button class="send-button" onclick="window.location.href='login'">Envoyez un colis</button>
   <button class="track-button" onclick="onclick="window.location.href='login'">Suivez votre expédition</button>

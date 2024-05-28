@@ -2,30 +2,35 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
+use App\Entity\Relais;
+use App\Entity\Status;
+use App\Entity\Etat;
+use App\Form\CommandeType;
+use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use App\Form\CommandeType;
-use App\Entity\Commande;
-use App\Entity\Relais;
-use App\Entity\Adresse;
-use App\Repository\CommandeRepository;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class CommandeController extends AbstractController
 {
     #[Route('/createCommande', name: 'app_commande')]
-    public function createCommande(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
+    public function createCommande(Request $request, EntityManagerInterface $entityManager, SessionInterface $session, CommandeRepository $commandeRepository, UserInterface $user): Response
     {
-        // Obtenir l'utilisateur connecté
-        $user = $this->getUser();
-
         // Créer une nouvelle instance de Commande
         $commande = new Commande();
         $commande->setLeUser($user); // Associer l'utilisateur connecté à la commande
+
+        // Obtenir le statut par défaut
+        $defaultStatus = new Status();
+        $defaultStatus->setLeEtat($entityManager->getReference(Etat::class, 1)); // Associer l'état par défaut à l'entité Status
+        $defaultStatus->setDate(new \DateTimeImmutable()); // Date actuelle
+        $entityManager->persist($defaultStatus); // Persistez le nouveau statut
+        $commande->setStatus($defaultStatus); // Associer le statut à la commande
 
         // Créer le formulaire avec l'instance de Commande
         $commandeform = $this->createForm(CommandeType::class, $commande, [
@@ -36,43 +41,27 @@ class CommandeController extends AbstractController
 
         // Vérifiez si le formulaire est soumis et valide
         if ($commandeform->isSubmitted() && $commandeform->isValid()) {
-            // Vérification si un relais est choisi
-            $relais = $commandeform->get('relais')->getData();
-            if ($relais) {
-                // Si un relais est choisi, supprimer l'adresse de destination
-                $commande->setAdresseDestination(null);
-            } else {
-                // Récupérer les adresses et les assigner à la commande
-                $adresseExpedition = $commandeform->get('adresseExpedition')->getData();
-                $adresseDestination = $commandeform->get('adresseDestination')->getData();
-                $adresseFacturation = $commandeform->get('adresseFacturation')->getData();
-
-                $commande->setAdresseExpedition($adresseExpedition);
-                $commande->setAdresseDestination($adresseDestination);
-                $commande->setAdresseFacturation($adresseFacturation);
-            }
+            // Votre logique de gestion de formulaire ici...
 
             // Sauvegarder les données de commande
             $entityManager->persist($commande);
             $entityManager->flush();
 
-            // Ajouter un message flash de succès
-            $this->addFlash('success', 'La commande a été validée avec succès.');
-
-            // Redirection vers la page de succès
-            // return $this->redirectToRoute('app_commande_success');
+            // Redirection vers la page de succès de la commande
             return $this->redirectToRoute('app_commande_recap', ['id' => $commande->getId()]);
 
-        } else {
-            // Ajouter un message flash d'erreur
-            $this->addFlash('error', 'Une erreur est survenue lors de la validation de la commande.');
         }
+
+        // Récupérer toutes les commandes de l'utilisateur connecté pour l'historique
+        $commandes = $commandeRepository->findBy(['leUser' => $user]);
 
         return $this->render('commande/index.html.twig', [
             'commandeform' => $commandeform->createView(),
             'user' => $this->getUser(),
+            'commandes' => $commandes, // Passer les commandes à la vue
         ]);
     }
+
 
     #[Route('/commande/success', name: 'app_commande_success')]
     public function commandeSuccess(): Response
@@ -94,6 +83,14 @@ class CommandeController extends AbstractController
         }
 
         return $this->render('commande/recap.html.twig', [
+            'commande' => $commande,
+        ]);
+    }
+
+    #[Route('/user/suivi/{id}', name: 'app_suivi_commande')]
+    public function suiviCommande(Commande $commande): Response
+    {
+        return $this->render('commande/suivi.html.twig', [
             'commande' => $commande,
         ]);
     }

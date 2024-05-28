@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\CommandeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
@@ -27,8 +26,8 @@ class Commande
     #[ORM\Column]
     private ?int $poids = null;
 
-    #[ORM\OneToMany(mappedBy: 'laCommande', targetEntity: Status::class)]
-    private Collection $lesStatus;
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    private ?Status $Status = null;
 
     #[ORM\ManyToOne(inversedBy: 'lesCommandes', cascade: ['persist'])]
     private ?User $leUser = null;
@@ -60,6 +59,11 @@ class Commande
 
     #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable(); // Initialise la date de création
+    }
 
     public function getId(): ?int
     {
@@ -110,27 +114,14 @@ class Commande
         return $this;
     }
 
-    public function getLesStatus(): Collection
+    public function getStatus(): ?Status
     {
-        return $this->lesStatus;
+        return $this->Status;
     }
 
-    public function addLesStatus(Status $lesStatus): static
+    public function setStatus(?Status $Status): static
     {
-        if (!$this->lesStatus->contains($lesStatus)) {
-            $this->lesStatus->add($lesStatus);
-            $lesStatus->setLaCommande($this);
-        }
-        return $this;
-    }
-
-    public function removeLesStatus(Status $lesStatus): static
-    {
-        if ($this->lesStatus->removeElement($lesStatus)) {
-            if ($lesStatus->getLaCommande() === $this) {
-                $lesStatus->setLaCommande(null);
-            }
-        }
+        $this->Status = $Status;
         return $this;
     }
 
@@ -231,12 +222,6 @@ class Commande
     {
         $this->relais = $relais;
         return $this;
-    }
-
-    public function __construct()
-    {
-        $this->createdAt = new \DateTimeImmutable(); // Initialise la date de création
-        $this->lesStatus = new ArrayCollection();
     }
 
     public function getCreatedAt(): \DateTimeImmutable

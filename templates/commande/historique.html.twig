@@ -19,6 +19,8 @@
                     <th class="td-contact">Dimensions du colis (HxLxl)</th>
                     <th class="td-contact">Poids du colis</th>
                     <th class="td-contact">Date de Commande</th>
+                    <th class="td-contact">Statut de la Commande</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -37,12 +39,16 @@
                         <td class="td-contact">{{ commande.hauteur }} x {{ commande.longueur }} x {{ commande.largeur }}</td>
                         <td class="td-contact">{{ commande.poids }} kg</td>
                         <td class="td-contact">{{ commande.createdAt|date('d/m/Y H:i') }}</td>
+                        <td class="td-contact">{{ commande.Status.leEtat.typeEtat }}</td>
                     </tr>
                    
                 {% endfor %}
+
+                
             </tbody>
         </table>
     </div>
+    <br><br><br><br><br><br><br>
     {% else %}
         <p>Aucune commande passée.</p>
         <br><br><br><br><br><br><br><br><br><br><br><br>

@@ -70,14 +70,24 @@
     {{ form_widget(commandeform.COMMANDER, {'attr': {'class': 'btn-creer'}}) }}
 
     {{ form_end(commandeform) }}
-
-    <div class="card w-50 mt-4">
+{% for commande in commandes %}
+<div class="card w-50 mt-4">
+    <div class="card-body">
+        <h5 class="card-title">Suivi de Commande</h5>
+        <p class="card-text">Liste des commandes en cours</p>
+        <a href="{{ path('app_suivi_commande', {'id': commande.id}) }}" class="btn-creer">Suivre ma commande</a>
+        <a href="{{ path('app_suivi_commande', {'id': commande.id}) }}">Suivi de commande</a>
+    </div>
+</div>
+{% endfor %}
+    {# <div class="card w-50 mt-4">
         <div class="card-body">
             <h5 class="card-title">Suivi de Commande</h5>
             <p class="card-text">Liste des commandes en cours</p>
-            <a href="#" class="btn-creer">Suivre ma commande</a>
+            <a href="{{ path('app_suivi_commande', {'id': commande.id}) }}" class="btn-creer">Suivre ma commande</a>
+            <a href="{{ path('app_suivi_commande', {'id': commande.id}) }}">Suivi de commande</a>
         </div>
-    </div>
+    </div> #}
 </div>
 
 {% endblock %}
