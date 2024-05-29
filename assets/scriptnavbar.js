@@ -31,3 +31,21 @@ new ResizeObserver(entries => {
     navLinksContainer.style.transition = "none";
   }
 }).observe(document.body)
+
+
+  // Identifier les boutons et les champs d'adresse dans le DOM
+const useUserBillingAddressButton = document.getElementById('useUserBillingAddressButton');
+const useUserShippingAddressButton = document.getElementById('useUserShippingAddressButton');
+const adresseFacturationField = document.getElementById('commandeform_adresseFacturation');
+const adresseExpeditionField = document.getElementById('commandeform_adresseExpedition');
+
+// Ajouter des écouteurs d'événements aux boutons
+useUserBillingAddressButton.addEventListener('click', () => {
+    // Remplir les champs d'adresse avec les informations de l'utilisateur
+    adresseFacturationField.value = '{{ app.user.adresseUser.numero }} {{ app.user.adresseUser.nom }}, {{ app.user.adresseUser.codePostal }} {{ app.user.adresseUser.ville }}';
+});
+
+useUserShippingAddressButton.addEventListener('click', () => {
+    // Remplir les champs d'adresse avec les informations de l'utilisateur
+    adresseExpeditionField.value = '{{ app.user.adresseUser.numero }} {{ app.user.adresseUser.nom }}, {{ app.user.adresseUser.codePostal }} {{ app.user.adresseUser.ville }}';
+});

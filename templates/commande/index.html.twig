@@ -4,7 +4,7 @@
 
 {% block content %}
 <p class="marge-navbar"> </p>
-<div class="formulaire-commande">
+<div class="formulaire-commande container-fluid">
     <h1 class="text-center">COMMANDE</h1>
     
     {# Afficher les messages flash de succès et d'erreur #}
@@ -19,7 +19,7 @@
     {{ form_start(commandeform) }}
     {{ form_errors(commandeform) }} {# Afficher les erreurs globales du formulaire #}
     
-    <div class="card w-100">
+    <div class="card w-150">
         <div class="card-body">
             <h5 class="card-title">Nouvelle Commande</h5>
             
@@ -42,23 +42,52 @@
             <br>
            
             
-            <p>Veuillez remplir les dimensions de votre colis </p>
+            <h5> Veuillez remplir les dimensions de votre colis </h5>
             
-                <div class="format-colis">
-                {# Champs pour les dimensions du colis #}
-                {{ form_row(commandeform.hauteur) }}
-                {{ form_row(commandeform.largeur) }}
-                {{ form_row(commandeform.longueur) }}
-                {{ form_row(commandeform.poids) }}
+                <div class="format-colis row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_row(commandeform.hauteur) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_row(commandeform.largeur) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_row(commandeform.longueur) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_row(commandeform.poids) }}
+                        </div>
+                    </div>
                 </div>
 
             <h5> Informations Destinataire</h5>
-            <div class="form-group">
-                {{ form_row(commandeform.nomDestinataire) }}
-                {{ form_row(commandeform.prenomDestinataire) }}
-                {{ form_row(commandeform.relais) }}
-                {{ form_row(commandeform.adresseDestination) }}
-                
+            <div class="champs-destinataire-commande">
+                <div class="form-group row ">
+                    <div class="col-md-6">
+                        {{ form_row(commandeform.nomDestinataire) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(commandeform.prenomDestinataire) }}
+                    </div>
+                </div>
+                <br>
+                <h6> Entrez soit un relais ou une adresse de destination</h6>
+                <br>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        {{ form_row(commandeform.relais) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(commandeform.adresseDestination) }}
+                    </div>
+                </div>
             </div>
 
             {# Bouton de soumission du formulaire #}

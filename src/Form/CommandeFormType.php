@@ -142,7 +142,7 @@ class CommandeFormType extends AbstractType
                 'required' => false,
             ])
             
-            ->add('COMMANDER', SubmitType::class,['label'=>'ENVOYER'])
+            ->add('COMMANDER', SubmitType::class,['label'=>'Valider la commande'])
         ;
     }
 

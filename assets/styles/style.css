@@ -343,8 +343,12 @@ nav { /*navbar container*/
 }
 
 /* _______ COMMANDE ____________*/
-    .formulaire-commande { margin: 5em auto; max-width: 1000px; width: 95%;  } 
-    .formulaire-commande code { padding: 2px 6px; }
+    .formulaire-commande { 
+      margin: 5em auto; max-width: 1000px; width: 95%;  
+    } 
+    .formulaire-commande code {
+       padding: 2px 6px; 
+      }
 
 /* __________FOOTER__________ */
 
@@ -491,4 +495,103 @@ nav { /*navbar container*/
   height : fit-content;
   margin-left: 50vw;
 }
+/* FORMULAIRE COMMANDE CAROLE */
 
+.formulaire-commande-carole {
+  font-family: Montserrat, Helvetica, sans-serif;
+  background: #444142;
+  color: #d19c26;
+  margin: 2vw 2vw;  
+}
+
+.body-sans-base {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  font-family: Montserrat, Helvetica, sans-serif;
+  background: #444142;
+  color: #d19c26;
+  margin: 3vw 3vw;
+  
+}
+
+
+.champs-adresses {/*formulaires adresses dans le formulaire commande*/
+  /* display: grid;*/
+  margin: 1vw 1.5vw; /* Réduction de la marge */
+  padding: 1vw 1.5vw; /* Réduction du padding */
+  border-radius: 1.5vw; /* Réduction du border-radius */
+  border: 0.1vw solid #d19c26; /* Réduction de l'épaisseur de la bordure */
+  width : 30vw; /* Réduction de la largeur */
+}
+
+.format-colis {/*formulaires adresses dans le formulaire commande*/
+  /* display: grid;*/
+  margin: 1.5vw; /* Réduction de la marge */
+  padding: 1.5vw; /* Réduction du padding */
+  border-radius: 1.5vw; /* Réduction du border-radius */
+  border: 0.1vw solid #d19c26; /* Réduction de l'épaisseur de la bordure */
+  width: 30vw; /* Réduction de la largeur */
+}
+
+.identite-destinataire {
+flex-direction: column;
+margin: 3vw 3vw;
+padding: 3vw 3vw;
+width: 75vw;
+} 
+
+.champs-identite-destinataire {/*formulaires adresses dans le formulaire commande*/
+  /* display: grid;*/
+  margin: 1vw 1vw;
+  padding: 1vw 1vw;
+  border-radius: 3vw;
+  border: 0.2vw solid #d19c26; 
+  width : 40vw;
+}
+
+.choix-destinaton {
+  /* display: grid;*/
+  margin: 3vw 3vw;
+  padding: 1vw 1vw;
+  border-radius: 3vw;
+  border: 0.2vw solid #d19c26; 
+  width : 40vw;
+}
+
+.titre-choix-destination {
+  /* display: grid;*/
+  margin: 3vw 3vw;
+  padding: 1vw 1vw;
+  border-radius: 3vw;
+  /* border: 0.2vw solid #d19c26;  */
+  width : 40vw;
+  border: 0.2vw solid black;
+  color: black;
+  background: linear-gradient(#d19c26, #E3CC81);
+}
+
+/* PAGE RECAP COMMANDE */
+
+.page-recap {
+  margin: 3vw 3vw;
+}
+
+.commande-reussie {
+  color: #E3CC81;
+  font-size: 2vw;
+  font-style: italic;
+}
+
+.container-fluid {
+    padding: 0 15px;
+}
+
+.champs-destinataire-commande {/*formulaires adresses dans le formulaire commande*/
+  /* display: grid;*/
+  margin: 1vw 1.5vw; /* Réduction de la marge */
+  padding: 1vw 1.5vw; /* Réduction du padding */
+  border-radius: 1.5vw; /* Réduction du border-radius */
+  border: 0.1vw solid #d19c26; /* Réduction de l'épaisseur de la bordure */
+  
+}

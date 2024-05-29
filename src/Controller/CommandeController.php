@@ -107,9 +107,11 @@ class CommandeController extends AbstractController
                         $this->addFlash('echec', 'Pas de casier pour ce relais');
                     }
                 } else {
-                    // Gérez le cas où le relais n'existe pas (peut-être une erreur?)
-                    $this->addFlash('echec', 'Pas de relais, certainement une erreur');
+                    $relais = null;
                 }
+            
+            } else {
+                    $relais = null;
             }
 
              // Obtenir les données de l'adresse de destination
