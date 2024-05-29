@@ -7,6 +7,9 @@ use App\Entity\Casier;
 use App\Entity\Commande;
 use App\Entity\User;
 use App\Entity\Relais;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormError;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -27,6 +30,8 @@ class CommandeFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+        // FORMULAIRE DE COMMANDE
+
         /* Dans le cas ou l'on souhaite avoir 1 ou + de colis
         // ici on rentre le nombre de colis à envoyer 
         ->add('nombreColis', IntegerType::class, [
@@ -43,19 +48,17 @@ class CommandeFormType extends AbstractType
        ->add('adresseFacturation', EntityType::class, [
                 'class' => Adresse::class,
                 'choice_label' => function ($adresse) {
-                    // Construire l'étiquette de choix personnalisée avec plusieurs colonnes
                     return $adresse->getNumero() . ' ' . $adresse->getNom() . ', ' . $adresse->getCodePostal() . ' ' . $adresse->getVille();
                 },
                 'label' => 'Adresse de facturation'
             ])
-        
             ->add('hauteur', IntegerType::class, [
                 'label' => 'Hauteur (en cm)',
                 'required' => true,
                 'constraints' => [
                     new Assert\Range([
                         'min' => 1,
-                        'max' => 90,
+                        'max' => 150,
                         'notInRangeMessage' => 'La hauteur doit être entre {{ min }} et {{ max }} cm.',
                     ]),
                 ],
@@ -66,7 +69,7 @@ class CommandeFormType extends AbstractType
                 'constraints' => [
                     new Assert\Range([
                         'min' => 1,
-                        'max' => 90,
+                        'max' => 80,
                         'notInRangeMessage' => 'La largeur doit être entre {{ min }} et {{ max }} cm.',
                     ]),
                 ],
@@ -77,7 +80,7 @@ class CommandeFormType extends AbstractType
                 'constraints' => [
                     new Assert\Range([
                         'min' => 1,
-                        'max' => 90,
+                        'max' => 80,
                         'notInRangeMessage' => 'La longueur doit être entre {{ min }} et {{ max }} cm.',
                     ]),
                 ],
@@ -88,23 +91,22 @@ class CommandeFormType extends AbstractType
                 'constraints' => [
                     new Assert\Range([
                         'min' => 0,
-                        'max' => 15,
+                        'max' => 50,
                         'notInRangeMessage' => 'Le poids doit être entre {{ min }} et {{ max }} kg.',
                     ]),
                 ],
-            ])    
-            
+            ])
             ->add('nomDestinataire', TextType::class, [
                 'label' => 'Nom',
                 'required' => true,
                 'constraints' => [
                     new Assert\NotBlank(['message' => 'Le nom du destinataire ne peut pas être vide.']),
                     new Assert\Length([
-                        'max' => 30, // Exemple : 30 caractères maximum
+                        'max' => 30,
                         'maxMessage' => 'Le nom ne doit pas dépasser {{ limit }} caractères.',
                     ]),
                     new Assert\Regex([
-                        'pattern' => '/^[a-zA-Z]+$/', // Permet uniquement les lettres
+                        'pattern' => '/^[a-zA-Z]+$/',
                         'message' => 'Le nom ne doit contenir que des lettres sans espace.',
                     ]),
                 ],
@@ -115,32 +117,41 @@ class CommandeFormType extends AbstractType
                 'constraints' => [
                     new Assert\NotBlank(['message' => 'Le prénom du destinataire ne peut pas être vide.']),
                     new Assert\Length([
-                        'max' => 30, // Exemple : 30 caractères maximum
+                        'max' => 30,
                         'maxMessage' => 'Le prénom ne doit pas dépasser {{ limit }} caractères.',
                     ]),
                     new Assert\Regex([
-                        'pattern' => '/^[a-zA-Z]+$/', // Permet uniquement les lettres
+                        'pattern' => '/^[a-zA-Z]+$/',
                         'message' => 'Le prénom ne doit contenir que des lettres sans espace.',
                     ]),
                 ],
             ])
-            
-            // Deroulant choix du point relais
-            ->add('relais', EntityType::class, [
+            ->add('leRelais', EntityType::class, [
                 'class' => Relais::class,
-                'choices' => $options['relais_choices'],  // Utilisez le paramètre fourni
-                'choice_label' => 'nom', // Assurez-vous que l'entité Relais a un champ "nom" ou similaire
-                'mapped' => false, // Parce que ce n'est pas une relation directe
+                'choices' => $options['relais_choices'],
+                'choice_label' => 'nom',
                 'label' => 'Choix du relais',
-                'placeholder' => 'Sélectionner un relais', // Optionnel
-                'required' => false, // Ajustez selon vos besoins
+                'placeholder' => 'Sélectionner un relais',
+                'required' => false,
             ])
-            
-            
             ->add('adresseDestination', AdresseDestinationType::class, [
                 'label' => 'Adresse de Destination',
                 'required' => false,
-            ])
+            ]);
+
+            // pour gerer le choix entre le relais et l'adresse destination
+            $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+                $form = $event->getForm();
+                $data = $event->getData();
+
+                $relais = $data->getLeRelais();
+                $adresseDestination = $data->getAdresseDestination();
+
+                if (!$relais && !$adresseDestination) {
+                    $form->get('leRelais')->addError(new FormError('Veuillez sélectionner un relais ou fournir une adresse de destination.'));
+                    $form->get('adresseDestination')->addError(new FormError('Veuillez sélectionner un relais ou fournir une adresse de destination.'));
+                }
+            })
             
             ->add('COMMANDER', SubmitType::class,['label'=>'Valider la commande'])
         ;
@@ -150,7 +161,7 @@ class CommandeFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Commande::class,
-        ]);
-        $resolver->setDefined(['relais_choices']);  // Autoriser des paramètres supplémentaires
+            'relais_choices'=> [],
+        ]);  // Autoriser des paramètres supplémentaires
     }
 }

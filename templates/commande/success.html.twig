@@ -16,7 +16,7 @@
             <p>Hauteur: {{ commande.hauteur }} cm</p>
             <p>Largeur: {{ commande.largeur }} cm</p>
             <p>Longueur: {{ commande.longueur }} cm</p>
-            <p>Poids: {{ commande.poids }} g</p>
+            <p>Poids: {{ commande.poids }} kg</p>
             <p>Nombre de Colis: {{ commande.nombreColis }}</p>
         </div>
     </div>
@@ -52,7 +52,12 @@
             <h5 class="card-title">Informations sur le relais</h5>
             {% if relais %}
                 <p>Nom du Relais: {{ relais.nom }}</p>
-            {% else %}
+                {% if idCasierAssocie %}
+                <p>ID du Casier associé: {{ idCasierAssocie }}</p>
+                {% else %}
+                    <p>Aucun casier associé à cette commande.</p>
+                {% endif %}
+                {% else %}
                 <p>Aucun relais trouvé pour cette commande.</p>
             {% endif %}
         </div>

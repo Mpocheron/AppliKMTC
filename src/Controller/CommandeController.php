@@ -35,11 +35,12 @@ class CommandeController extends AbstractController
     /*
     */
 
-    #[Route('/createCommande', name: 'app_commande')]
+   #[Route('/createCommande', name: 'app_commande')]
     public function createCommande(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         // Obtenir l'utilisateur connecté
         $user = $this->getUser(); 
+        
 
         // l'adresse du user connecté est récupéré
         $adresse = null;
@@ -47,140 +48,126 @@ class CommandeController extends AbstractController
         if ($adresseUserEntity) {
             $adresse = $adresseUserEntity->getLeAdresse();
         }
-        
+
         // Créer une nouvelle instance de Commande
         $commande = new Commande();
 
         // Créer le formulaire avec l'instance de Commande
         $commandeform = $this->createForm(CommandeFormType::class, $commande, [
-        'relais_choices' => $entityManager->getRepository(Relais::class)->findAll()
+            'relais_choices' => $entityManager->getRepository(Relais::class)->findAll()
         ]);
         $commandeform->handleRequest($request);
 
         // -------------    SI LE FORMULAIRE EST VALIDE ----------- \\
         // Vérifiez si le formulaire est soumis et valide
         if ($commandeform->isSubmitted() && $commandeform->isValid()) {
-
             // Définir la date de commande à la date actuelle
             $commande->setDateCommande(new \DateTime());
             
-            // Récupérer le relais sélectionné (si nécessaire)
-            //$relais = $commandeform->get('relais')->getData();
-            // Récupérez l'ID du relais sélectionné dans le formulaire de commande
-            $relaisId = $commandeform->get('relais')->getData();
+            $relais = $commande->getLeRelais();
+            $adresseDestination = $commande->getAdresseDestination();
+
+            // Récupérez le relais sélectionné dans le formulaire de commande
+            if ($relais === null && $adresseDestination === null) {
+                $this->addFlash('echec', 'Veuillez sélectionner un relais ou fournir une adresse de destination.');
+                return $this->redirectToRoute('app_commande');
+            }
 
             // Vérifiez si un relais a été sélectionné
-            if ($relaisId) {
-                // Récupérez l'entité Relais correspondante
-                $relais = $entityManager->getRepository(Relais::class)->find($relaisId);
+            if ($relais !== null) {
 
-                // Vérifiez si le relais existe
-                if ($relais) {
-                    // Récupérez tous les casiers associés au relais sélectionné
-                    $casiers = $entityManager->getRepository(Casier::class)->findBy([
-                        'leRelais' => $relais,
-                        'utilise' => 0 // Assurez-vous que le casier n'est pas déjà utilisé
-                    ]);
+                // Récupérez tous les casiers associés au relais sélectionné
+                $casiers = $entityManager->getRepository(Casier::class)->findBy([
+                    'leRelais' => $relais,
+                    'utilise' => 0 
+                ]);
 
-                    // Vérifiez si des casiers ont été trouvés
-                    if (!empty($casiers)) {
-                        // Parcourez tous les casiers pour trouver celui qui est libre
-                        foreach ($casiers as $casier) {
-                            if (!$casier->isUtilise()) {
-                                // Si un casier est libre, associe le casier à la commande
-                                $commande->setLeCasier($casier);
-                                // Marque le casier comme utilisé
-                                $casier->setUtilise(true);
-                                $entityManager->persist($casier);
-                                // Sort de la boucle une fois qu'un casier a été trouvé
-                                break;
-                            }
+                // Vérifiez si des casiers ont été trouvés
+                if (!empty($casiers)) {
+                    // Parcourez tous les casiers pour trouver celui qui est libre
+                    foreach ($casiers as $casier) {
+                        if (!$casier->isUtilise()) {
+                            // Si un casier est libre, associe le casier à la commande
+                            $commande->setLeCasier($casier);
+                            // Marque le casier comme utilisé
+                            $casier->setUtilise(true);
+                            $entityManager->persist($casier);
+                            // Sort de la boucle une fois qu'un casier a été trouvé
+                            break;
                         }
-
-                        // Si aucun casier libre n'a été trouvé
-                        if (!$commande->getLeCasier()) {
-                            // Gérez le cas où aucun casier disponible n'est trouvé pour ce relais
-                            $this->addFlash('echec', 'Pas de casier disponible');
-                        }
-                    } else {
-                        // Gérez le cas où aucun casier n'est associé au relais sélectionné
-                        $this->addFlash('echec', 'Pas de casier pour ce relais');
+                    }
+                    // Si aucun casier libre n'a été trouvé
+                    if (!$commande->getLeCasier()) {
+                        // Gérez le cas où aucun casier disponible n'est trouvé pour ce relais
+                        $this->addFlash('echec', 'Pas de casier disponible');
+                        return $this->redirectToRoute('app_commande');
                     }
                 } else {
-                    $relais = null;
+                    $this->addFlash('echec', 'Pas de casier pour ce relais');
+                    return $this->redirectToRoute('app_commande');
                 }
-            
-            } else {
-                    $relais = null;
-            }
-
-             // Obtenir les données de l'adresse de destination
-            $adresseDestination = $commandeform->get('adresseDestination')->getData();
-
-            if ($adresseDestination !== null) {
-                // Si l'adresse n'est pas persisté
-                if (!$entityManager->contains($adresseDestination)) {
-                    // Persister la nouvelle adresse
-                    $entityManager->persist($adresseDestination);
-                    $entityManager->flush(); // Sauvegarder pour obtenir un ID
-                }
-
-                
-                // /!!\ Lier la commande à l'utilisateur connecté /!!\
-                $commande->setLeUser($user);
-                // Associer l'adresse de destination à la commande
-                $commande->setAdresseDestination($adresseDestination);
-                // adresse de l'expediteur = adresse du user connecté
-                $commande->setAdresseExpedition($adresse);
                 // Associe ce relais à la commande
                 $commande->setLeRelais($relais);
-
             }
 
-            // Sauvegarder les données de commande
+            if ($adresseDestination !== null) {
+                if (!$entityManager->contains($adresseDestination)) {
+                    $entityManager->persist($adresseDestination);
+                }
+                $commande->setAdresseDestination($adresseDestination);
+            }
+
+            // /!!\ Lier la commande à l'utilisateur connecté /!!\
+            $commande->setLeUser($user);
+
+            // adresse de l'expediteur = adresse du user connecté
+            $commande->setAdresseExpedition($adresse);
+
+            // Sauvegarder les données de commande en bdd
             $entityManager->persist($commande);
-            $entityManager->flush();  
+            $entityManager->flush();
+
 
             // Ajouter un message flash de succès
             $this->addFlash('success', 'La commande a été validée avec succès.');
-
-            return $this->redirectToRoute('app_commande_success', ['id' => $commande->getId()]); // Redirection après succès
+            return $this->redirectToRoute('app_commande_success', ['id' => $commande->getId()]);
+        } else {
+             // ------------- si erreur ----------- \\
+            if ($commandeform->isSubmitted()) {
+                $this->addFlash('error', 'Une erreur est survenue lors de la validation de la commande.');
+            }
         }
-
-        // ------------- si erreur ----------- \\
-        // Si le formulaire a été soumis mais n'est pas valide
-        else {
-            // Ajouter un message flash d'erreur
-            $this->addFlash('error', 'Une erreur est survenue lors de la validation de la commande.');
-        }
-
 
         // ------------------- RENVOIS -------------- \\
+        
         return $this->render('commande/index.html.twig', [
             'commandeform' => $commandeform->createView(),
             'adresse' => $adresse,
             'user' => $this->getUser(),
+            'idCasierAssocie' => $commande->getLeCasier() ? $commande->getLeCasier()->getId() : null,
         ]);
     }
 
+    // lorsque la commande est validée, afficher le recaputilatiof de la commande
     #[Route('/commande/success/{id}', name: 'app_commande_success')]
     public function commandeSuccess(Commande $commande): Response
     {   
-        // récupère le user, l'adresse expedition, destination, relais la date de la commande
-        $user = $this->getUser(); 
-        $adresseExpedition = $commande->getAdresseExpedition();
-        $adresseDestination = $commande->getAdresseDestination();
-        $relais = $commande->getLeRelais();
-        $dateCommande = $commande->getDateCommande();
+        // Récupérer l'ID du casier associé à la commande
+        $idCasierAssocie = null;
+        if ($commande->getLeCasier() !== null) {
+            $idCasierAssocie = $commande->getLeCasier()->getId();
+        }
 
+        // récupère le user, l'adresse expedition, destination, relais la date de la commande
         return $this->render('commande/success.html.twig', [
             'commande' => $commande,
-            'user' => $user,
-            'adresseExpedition' => $adresseExpedition,
-            'adresseDestination' => $adresseDestination,
-            'relais' => $relais,
-            'dateCommande' => $dateCommande,
+            'user' => $this->getUser(),
+            'adresseExpedition' => $commande->getAdresseExpedition(),
+            'adresseDestination' => $commande->getAdresseDestination(),
+            'relais' => $commande->getLeRelais(),
+            'dateCommande' => $commande->getDateCommande(),
             'message' => 'Commande réussie!',
+            'idCasierAssocie' => $idCasierAssocie,
         ]);
     }
 

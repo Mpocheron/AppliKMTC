@@ -41,7 +41,7 @@
             {{ form_widget(commandeform.adresseFacturation, {'attr': {'class': 'champs-adresses'}}) }}
             <br>
            
-            
+            {# Dimensions du colis #}
             <h5> Veuillez remplir les dimensions de votre colis </h5>
             
                 <div class="format-colis row">
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                 </div>
-
+            {# Informations Destinataire #}
             <h5> Informations Destinataire</h5>
             <div class="champs-destinataire-commande">
                 <div class="form-group row ">
@@ -82,7 +82,7 @@
                 <br>
                 <div class="form-group row">
                     <div class="col-md-6">
-                        {{ form_row(commandeform.relais) }}
+                        {{ form_row(commandeform.leRelais) }}
                     </div>
                     <div class="col-md-6">
                         {{ form_row(commandeform.adresseDestination) }}
