@@ -1,16 +1,21 @@
-{# {% extends 'base.html.twig' %} #}
+{% extends 'base.html.twig' %}
+
+{# {% block title %}Créer un compte{% endblock %} #}
 
 {% block content %}
 <div class="container-register">
 <table><tr>
-    <td class="formulaire-register">
-        <br><br><br><br><br>
-        <div class="titre-register">Créez votre compte</div>
-        
-        {{ form_errors(registrationForm) }}
 
-        {{ form_start(registrationForm) }}
-        
+
+
+    <td class="formulaire-register">
+    <span class="marge-navbar"> </span>
+    <div class="titre-register">Créez votre compte</div>
+
+    {{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm) }}
+
         <p><label class="legende-register" for="registrationForm_email">Email</label></p>
         <p>{{ form_widget(registrationForm.email, {'attr': {'class': 'champs-register', 'id': 'registrationForm_email'}}) }}</p>
 
@@ -25,36 +30,13 @@
 
         <p><label class="legende-register" for="registrationForm_telephone">Téléphone</label></p>
         <p>{{ form_widget(registrationForm.telephone, {'attr': {'class': 'champs-register', 'id': 'registrationForm_telephone'}}) }}</p>
-        </td><td class="formulaire-register2">
-        <br><br><br><br><br><br><br><br>
-        <p>ADRESSE</p>
-        <!-- Ajoutez les champs d'adresse avec les classes CSS existantes -->
-        <p><label class="legende-register" for="registrationForm_adresse_designation">Désignation</label></p>
-        <p>{{ form_widget(registrationForm.adresse_designation, {'attr': {'class': 'champs-register2', 'id': 'registrationForm_adresse_designation'}}) }}</p>
 
-        <p><label class="legende-register" for="registrationForm_adresse_numero">Numéro</label></p>
-        <p>{{ form_widget(registrationForm.adresse_numero, {'attr': {'class': 'champs-register2', 'id': 'registrationForm_adresse_numero'}}) }}</p>
-
-        <p><label class="legende-register" for="registrationForm_adresse_rue">Rue</label></p>
-        <p>{{ form_widget(registrationForm.adresse_rue, {'attr': {'class': 'champs-register2', 'id': 'registrationForm_adresse_rue'}}) }}</p>
-
-        <p><label class="legende-register" for="registrationForm_adresse_complement">Complément d'adresse</label></p>
-        <p>{{ form_widget(registrationForm.adresse_complement, {'attr': {'class': 'champs-register2', 'id': 'registrationForm_adresse_complement'}}) }}</p>
-
-        <p><label class="legende-register" for="registrationForm_adresse_code_postal">Code postal</label></p>
-        <p>{{ form_widget(registrationForm.adresse_code_postal, {'attr': {'class': 'champs-register2', 'id': 'registrationForm_adresse_code_postal'}}) }}</p>
-
-        <p><label class="legende-register" for="registrationForm_adresse_ville">Ville</label></p>
-        <p>{{ form_widget(registrationForm.adresse_ville, {'attr': {'class': 'champs-register2', 'id': 'registrationForm_adresse_ville'}}) }}</p>
-        
-        <p><label class="legende-register" for="registrationForm_agreeTerms">J'accepte les termes et conditions</label></p>
         <p>{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input', 'id': 'registrationForm_agreeTerms'}}) }}</p>
-        
-        <button class="btn-creer" type="submit">Créer</button>
-        {{ form_end(registrationForm) }}
-        <br><br><br>
-    </td>
-    {# <td><img src="img/cubes2.png" class="image-cubes"/></td> #}
-</tr></table>
-</div>
+    
+    <button class="btn-creer" type="submit">Créer</button></div>
+    {{ form_end(registrationForm) }}
+
+</td>
+    <td class="image-td"> <img src="img/cubes1.png" class="image-cubes1"/></td></tr></table>
+    </div>
 {% endblock %}
