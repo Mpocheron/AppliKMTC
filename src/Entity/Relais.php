@@ -24,9 +24,16 @@ class Relais
     #[ORM\OneToMany(mappedBy: 'leRelais', targetEntity: Casier::class, orphanRemoval: true)]
     private Collection $lesCasiers;
 
+    /**
+     * @var Collection<int, Commande>
+     */
+    #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'leRelais')]
+    private Collection $lesCommandes;
+
     public function __construct()
     {
         $this->lesCasiers = new ArrayCollection();
+        $this->lesCommandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,6 +112,36 @@ class Relais
             // Retourne les informations sous forme de tableau associatif
             return $nombreCasiers;
         }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getLesCommandes(): Collection
+    {
+        return $this->lesCommandes;
+    }
+
+    public function addLesCommande(Commande $lesCommande): static
+    {
+        if (!$this->lesCommandes->contains($lesCommande)) {
+            $this->lesCommandes->add($lesCommande);
+            $lesCommande->setLeRelais($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesCommande(Commande $lesCommande): static
+    {
+        if ($this->lesCommandes->removeElement($lesCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($lesCommande->getLeRelais() === $this) {
+                $lesCommande->setLeRelais(null);
+            }
+        }
+
+        return $this;
+    }
     
 
 }

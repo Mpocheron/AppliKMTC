@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CommandeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
@@ -53,6 +54,12 @@ class Commande
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $prenomDestinataire = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $DateCommande = null;
+
+    #[ORM\ManyToOne(inversedBy: 'lesCommandes')]
+    private ?Relais $leRelais = null;
 
     public function __construct()
     {
@@ -234,6 +241,30 @@ class Commande
     public function setPrenomDestinataire(?string $prenomDestinataire): static
     {
         $this->prenomDestinataire = $prenomDestinataire;
+
+        return $this;
+    }
+
+    public function getDateCommande(): ?\DateTimeInterface
+    {
+        return $this->DateCommande;
+    }
+
+    public function setDateCommande(\DateTimeInterface $DateCommande): static
+    {
+        $this->DateCommande = $DateCommande;
+
+        return $this;
+    }
+
+    public function getLeRelais(): ?Relais
+    {
+        return $this->leRelais;
+    }
+
+    public function setLeRelais(?Relais $leRelais): static
+    {
+        $this->leRelais = $leRelais;
 
         return $this;
     }

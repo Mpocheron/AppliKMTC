@@ -3,7 +3,7 @@
 {# {% block title %}Commande{% endblock %} #}
 
 {% block content %}
-
+<p class="marge-navbar"> </p>
 <div class="formulaire-commande">
     <h1 class="text-center">COMMANDE</h1>
     
@@ -19,7 +19,7 @@
     {{ form_start(commandeform) }}
     {{ form_errors(commandeform) }} {# Afficher les erreurs globales du formulaire #}
     
-    <div class="card w-75">
+    <div class="card w-100">
         <div class="card-body">
             <h5 class="card-title">Nouvelle Commande</h5>
             
@@ -40,16 +40,17 @@
             <h5> Adresse de Facturation</h5>
             {{ form_widget(commandeform.adresseFacturation, {'attr': {'class': 'champs-adresses'}}) }}
             <br>
-            {# Champ pour l'adresse de facturation #}
-            <h5> Adresse de Facturation</h5>
+           
             
             <p>Veuillez remplir les dimensions de votre colis </p>
             
-            {# Champs pour les dimensions du colis #}
-            {{ form_row(commandeform.hauteur) }}
-            {{ form_row(commandeform.largeur) }}
-            {{ form_row(commandeform.longueur) }}
-            {{ form_row(commandeform.poids) }}
+                <div class="format-colis">
+                {# Champs pour les dimensions du colis #}
+                {{ form_row(commandeform.hauteur) }}
+                {{ form_row(commandeform.largeur) }}
+                {{ form_row(commandeform.longueur) }}
+                {{ form_row(commandeform.poids) }}
+                </div>
 
             <h5> Informations Destinataire</h5>
             <div class="form-group">

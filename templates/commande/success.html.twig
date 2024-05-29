@@ -1,41 +1,70 @@
+{# templates/commande/success.html.twig #}
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Commande{% endblock %}
-
 {% block content %}
-<div class="formulaire-commande code" >
+<p class="marge-navbar"> </p>
+<div class="container mt-4">
+    <h1 class="text-center">Récapitulatif de votre commande</h1>
+    <p>{{ message }}</p>
 
-    <h1>Résultat de la commande</h1>
-
-    {# Afficher le message directement transmis #}
-    
-    <div class="col-6">
-        {% if message %}
-            <div class="alert alert-success">{{ message }}</div>
-        {% endif %}
-    </div>
-     
     <h2>Détails de la commande</h2>
-    <p>ID de la commande : {{ commande.id }}</p>
-   
 
-    <h2>Votre adresse d'expedition</h2>
-    {% if adresse %}
-        <p>{{ adresse.numero }} {{ adresse.nom }}<br>
-        {{ adresse.codePostal }} {{ adresse.ville }}</p>
-    {% else %}
-        <p>Aucune adresse trouvée pour cet utilisateur.</p>
-    {% endif %}
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Informations sur le colis</h5>
+            <p>Hauteur: {{ commande.hauteur }} cm</p>
+            <p>Largeur: {{ commande.largeur }} cm</p>
+            <p>Longueur: {{ commande.longueur }} cm</p>
+            <p>Poids: {{ commande.poids }} g</p>
+            <p>Nombre de Colis: {{ commande.nombreColis }}</p>
+        </div>
+    </div>
 
-    <p>Dimensions du colis : Hauteur {{ commande.hauteur }}, Largeur {{ commande.largeur }}, Longueur {{ commande.longueur }}</p>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Informations sur l'expéditeur</h5>
+            {% if adresseExpedition %}
+                <p>{{ adresseExpedition.numero }} {{ adresseExpedition.nom }}<br>
+                {{ adresseExpedition.codePostal }} {{ adresseExpedition.ville }}</p>
+            {% else %}
+                <p>Aucune adresse d'expédition trouvée pour cette commande.</p>
+            {% endif %}
+        </div>
+    </div>
 
-  
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Informations sur le destinataire</h5>
+            <p>Nom: {{ commande.nomDestinataire }}</p>
+            <p>Prénom: {{ commande.prenomDestinataire }}</p>
+            {% if adresseDestination %}
+                <p>{{ adresseDestination.numero }} {{ adresseDestination.nom }}<br>
+                {{ adresseDestination.codePostal }} {{ adresseDestination.ville }}</p>
+            {% else %}
+                <p>Aucune adresse de destination trouvée pour cette commande.</p>
+            {% endif %}
+        </div>
+    </div>
 
-    <h3>Informations du destinataire</h3>
-    <p>Nom : {{ commande.nomDestinataire }}</p>
-    <p>Prénom : {{ commande.prenomDestinataire }}</p>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Informations sur le relais</h5>
+            {% if relais %}
+                <p>Nom du Relais: {{ relais.nom }}</p>
+            {% else %}
+                <p>Aucun relais trouvé pour cette commande.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Informations sur la commande</h5>
+            <p>Date de commande : {{ dateCommande|date('d/m/Y H:i') }}</p>
+        </div>
+    </div>
+
     
-
 </div>
-
 {% endblock %}
