@@ -139,6 +139,7 @@ class CommandeFormType extends AbstractType
             
             ->add('adresseDestination', AdresseDestinationType::class, [
                 'label' => 'Adresse de Destination',
+                'required' => false,
             ])
             
             ->add('COMMANDER', SubmitType::class,['label'=>'ENVOYER'])
