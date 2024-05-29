@@ -14,24 +14,44 @@
 
     <h2>Informations Expéditeur</h2>
     <br>
-    <table>
+    {# <table>
         <tr>
             <td>
                 <h5>Adresse de Facturation</h5>
                 <label>
-                    {# <input type="checkbox" id="useUserBillingAddress"> Utiliser mon adresse utilisateur #}
+                    <input type="checkbox" id="useUserBillingAddress"> Utiliser mon adresse utilisateur <br>{{ app.user.adresseUser.numero }} {{ app.user.adresseUser.nom }}, {{ app.user.adresseUser.codePostal }} {{ app.user.adresseUser.ville }}
                 </label>
                 {{ form_widget(commandeform.adresseFacturation, {'attr': {'class': 'champs-adresses'}}) }}
             </td>
             <td>
                 <h5>Adresse d'expédition</h5>
                 <label>
-                    {# <input type="checkbox" id="useUserShippingAddress"> Utiliser mon adresse utilisateur #}
+                    <input type="checkbox" id="useUserShippingAddress"> Utiliser mon adresse utilisateur <br>{{ app.user.adresseUser.numero }} {{ app.user.adresseUser.nom }}, {{ app.user.adresseUser.codePostal }} {{ app.user.adresseUser.ville }}
                 </label>
                 {{ form_widget(commandeform.adresseExpedition, {'attr': {'class': 'champs-adresses'}}) }}
             </td>
         </tr>
-    </table>
+    </table> #}
+<table>
+    <tr>
+        <td>
+            <h5>Adresse de Facturation</h5>
+            <label>
+                {# <input type="checkbox" id="useUserBillingAddress"> Utiliser mon adresse utilisateur <br>{{ app.user.adresseUser.numero }} {{ app.user.adresseUser.nom }}, {{ app.user.adresseUser.codePostal }} {{ app.user.adresseUser.ville }} #}
+                <input type="checkbox" id="useUserBillingAddress" data-numero="{{ app.user.adresseUser.numero }}" data-nom="{{ app.user.adresseUser.nom }}" data-codePostal="{{ app.user.adresseUser.codePostal }}" data-ville="{{ app.user.adresseUser.ville }}">Utiliser mon adresse utilisateur <br>{{ app.user.adresseUser.numero }} {{ app.user.adresseUser.nom }}, {{ app.user.adresseUser.codePostal }} {{ app.user.adresseUser.ville }}
+
+            </label>
+            {{ form_widget(commandeform.adresseFacturation, {'attr': {'class': 'champs-adresses', 'disabled': 'disabled'}}) }}
+        </td>
+        <td>
+            <h5>Adresse d'expédition</h5>
+            <label>
+                <input type="checkbox" id="useUserShippingAddress" data-numero="{{ app.user.adresseUser.numero }}" data-nom="{{ app.user.adresseUser.nom }}" data-codePostal="{{ app.user.adresseUser.codePostal }}" data-ville="{{ app.user.adresseUser.ville }}">Utiliser mon adresse utilisateur <br>{{ app.user.adresseUser.numero }} {{ app.user.adresseUser.nom }}, {{ app.user.adresseUser.codePostal }} {{ app.user.adresseUser.ville }}
+            </label>
+            {{ form_widget(commandeform.adresseExpedition, {'attr': {'class': 'champs-adresses', 'disabled': 'disabled'}}) }}
+        </td>
+    </tr>
+</table>
 
     <h3>Veuillez remplir les dimensions de votre colis</h3>
 
@@ -71,7 +91,7 @@
     {{ form_widget(commandeform.COMMANDER, {'attr': {'class': 'btn-creer'}}) }}
 
     {{ form_end(commandeform) }}
-{% for commande in commandes %}
+{# {% for commande in commandes %}
 <div class="card w-50 mt-4">
     <div class="card-body">
         <h5 class="card-title">Suivi de Commande</h5>
@@ -80,7 +100,7 @@
         <a href="{{ path('app_suivi_commande', {'id': commande.id}) }}">Suivi de commande</a>
     </div>
 </div>
-{% endfor %}
+{% endfor %} #}
     {# <div class="card w-50 mt-4">
         <div class="card-body">
             <h5 class="card-title">Suivi de Commande</h5>
@@ -89,6 +109,42 @@
             <a href="{{ path('app_suivi_commande', {'id': commande.id}) }}">Suivi de commande</a>
         </div>
     </div> #}
-</div>
+{# </div> #}
+{# <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#useUserBillingAddress").change(function() {
+            if (this.checked) {
+                $("#commandeform_adresseFacturation_numero").val("{{ app.user.adresseUser.numero }}");
+                $("#commandeform_adresseFacturation_nom").val("{{ app.user.adresseUser.nom }}");
+                $("#commandeform_adresseFacturation_codePostal").val("{{ app.user.adresseUser.codePostal }}");
+                $("#commandeform_adresseFacturation_ville").val("{{ app.user.adresseUser.ville }}");
+            } else {
+                $("#commandeform_adresseFacturation_numero").val("");
+                $("#commandeform_adresseFacturation_nom").val("");
+                $("#commandeform_adresseFacturation_codePostal").val("");
+                $("#commandeform_adresseFacturation_ville").val("");
+            }
+        });
+
+        $("#useUserShippingAddress").change(function() {
+            if (this.checked) {
+                $("#commandeform_adresseExpedition_numero").val("{{ app.user.adresseUser.numero }}");
+                $("#commandeform_adresseExpedition_nom").val("{{ app.user.adresseUser.nom }}");
+                $("#commandeform_adresseExpedition_codePostal").val("{{ app.user.adresseUser.codePostal }}");
+                $("#commandeform_adresseExpedition_ville").val("{{ app.user.adresseUser.ville }}");
+            } else {
+                $("#commandeform_adresseExpedition_numero").val("");
+                $("#commandeform_adresseExpedition_nom").val("");
+                $("#commandeform_adresseExpedition_codePostal").val("");
+                $("#commandeform_adresseExpedition_ville").val("");
+            }
+        }); #}
+        
+
+    {# }); #}
+{# </script> #}
+
+
 
 {% endblock %}
