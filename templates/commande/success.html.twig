@@ -3,11 +3,39 @@
 {% block title %}Commande{% endblock %}
 
 {% block content %}
+<div class="formulaire-commande code" >
 
     <h1>Résultat de la commande</h1>
 
     {# Afficher le message directement transmis #}
-    {% if message %}
-        <div class="alert alert-success">{{ message }}</div>
+    
+    <div class="col-6">
+        {% if message %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endif %}
+    </div>
+     
+    <h2>Détails de la commande</h2>
+    <p>ID de la commande : {{ commande.id }}</p>
+   
+
+    <h2>Votre adresse d'expedition</h2>
+    {% if adresse %}
+        <p>{{ adresse.numero }} {{ adresse.nom }}<br>
+        {{ adresse.codePostal }} {{ adresse.ville }}</p>
+    {% else %}
+        <p>Aucune adresse trouvée pour cet utilisateur.</p>
     {% endif %}
+
+    <p>Dimensions du colis : Hauteur {{ commande.hauteur }}, Largeur {{ commande.largeur }}, Longueur {{ commande.longueur }}</p>
+
+  
+
+    <h3>Informations du destinataire</h3>
+    <p>Nom : {{ commande.nomDestinataire }}</p>
+    <p>Prénom : {{ commande.prenomDestinataire }}</p>
+    
+
+</div>
+
 {% endblock %}

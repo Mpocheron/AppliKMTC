@@ -65,8 +65,14 @@ class CommandeController extends AbstractController
                     $entityManager->flush(); // Sauvegarder pour obtenir un ID
                 }
 
+                
+                // /!!\ Lier la commande à l'utilisateur connecté /!!\
+                $commande->setLeUser($user);
                 // Associer l'adresse de destination à la commande
                 $commande->setAdresseDestination($adresseDestination);
+                // adresse de l'expediteur = adresse du user connecté
+                $commande->setAdresseExpedition($adresse);
+
             }
 
 
@@ -77,7 +83,7 @@ class CommandeController extends AbstractController
             // Ajouter un message flash de succès
             $this->addFlash('success', 'La commande a été validée avec succès.');
 
-            return $this->redirectToRoute('app_commande_success'); // Redirection après succès
+            return $this->redirectToRoute('app_commande_success', ['id' => $commande->getId()]); // Redirection après succès
         }
 
         // Si le formulaire a été soumis mais n'est pas valide
@@ -93,11 +99,26 @@ class CommandeController extends AbstractController
         ]);
     }
 
-    #[Route('/commande/success', name: 'app_commande_success')]
-    public function commandeSuccess(): Response
+    #[Route('/commande/success/{id}', name: 'app_commande_success')]
+    public function commandeSuccess(Commande $commande): Response
     {
+        // Récupérer l'utilisateur connecté
+        $user = $this->getUser();
+
+        // Initialiser l'adresse à null
+        $adresse = null;
+        
+        // Vérifier si l'utilisateur est connecté et s'il a une adresse associée
+        if ($user && $user->getLesAdresseUsers()->count() > 0) {
+            // Supposons que l'adresse à utiliser est la première adresse associée à l'utilisateur
+            $adresse = $user->getLesAdresseUsers()->first()->getLeAdresse();
+        }
+
+
         return $this->render('commande/success.html.twig', [
-            'message' => 'Commande réussie!',
+            'commande' => $commande,
+            'adresse' => $adresse,
+            'message' => 'Commande validée !',
         ]);
     }
 
